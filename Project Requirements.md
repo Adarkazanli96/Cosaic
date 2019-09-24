@@ -32,17 +32,23 @@ HTML/CSS, PHP, SQL
 (Anh's section)
 ##Describe users:
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;End users will be people who are interested in using our social media service.
-##How users can access the system:
+
+How users can access the system:
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Users will need a PC or laptop to connect to the browser such as Safari, Google Chrome, or Internet Explorer. Users will be required to sign up for a new account or log in if they have already created an account previously with Cosaic. 
 Describe each functionality/features, functional processes and I/O(s).
-##View profile
+
+View profile
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;After users log in their account, they will initially be shown a list of all their posts on the home page. Users will be able to view their profile details, including a summary of posts they have made and their profile picture.
-##Create Posts
+
+Create Posts
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;On the top right of the Cosaic’s website, there is an option to create a post. By clicking on the “+” button, a status pop up will appear on the screen and prompt users to enter information. Users can add their information that they want to share in the “caption” box. The message can be anything what’s going on in their lives, what’s changed, or simply how they’re feeling or what they’re thinking. Advanced functionality allows users to also attach pictures to the messages they post. Displaying an interactive visualization makes it easier for viewers to imagine the meaning and background of the messages. Users can post their message on their home page by simply clicking on the “Save” button at the bottom of the table.
-##Delete Posts
+
+Delete Posts
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Users can delete their posts by clicking the “...” button on the top right of the menu bar to bring up the options menu, then click the “-” symbol next to each post they want to delete. Cosaic will prompt the user to confirm that they want to delete their post. Because their posts cannot be recovered after deleting, they have an option that allows the user to reconsider by clicking cancel or confirm their choice by choosing delete. After deleting the posts, users will see their home page with an updated view.
-##Edit Posts  
+
+Edit Posts  
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Users can delete their posts by choosing “...” button on the top right of the menu bar to bring up the options menu, then click the symbol next to the post they want to edit. The table of status will display the current message being edited and a picture, if the post has a picture associated with it. Users have an option to edit the content of their messages or reupload their picture. If users want to change their picture, there is a button “X” what users can click on to delete the picture. After that, users can re-upload a new photo. To successfully edit the chosen post, users will need to click on the “Save” button at the bottom at the table to publish their changes.
+
 ##View other users posts    
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Users can search for other people who have an account on Cosaic by inputting another users’ names in the search bar at the middle top of the menu bar and clicking the button search. Because ids on Cosaic are unique for each user and each account, users will immediately be brought to the searched user’s home page. The searched users’ homepage layout is the same style as users’ homepage, but there is no option to Create Posts, Delete Posts, and Edit Posts.
 
