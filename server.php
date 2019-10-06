@@ -31,7 +31,7 @@ $result = $db->query($query);
 //SIGN UP
 if(isset($_POST['signup']) && $_SERVER['REQUEST_METHOD'] == "POST"){
 //if(isset($_POST['signup'])){
-  echo "signup success";
+  //echo "signup success";
   $username = mysqli_real_escape_string($db, $_POST['name']);
   $email = mysqli_real_escape_string($db, $_POST['email']);
   $password_1 = mysqli_real_escape_string($db, $_POST['pass']);
@@ -69,7 +69,7 @@ if(isset($_POST['signup']) && $_SERVER['REQUEST_METHOD'] == "POST"){
           VALUES('$username', '$email', '$password')";
     mysqli_query($db, $query);
     $_SESSION['username'] = $username;
-    header('location: login.php');
+    header('location: index.php');
   }
 }
 
@@ -94,7 +94,7 @@ if(isset($_POST['login']) && $_SERVER['REQUEST_METHOD'] == "POST"){
       if (mysqli_num_rows($results) == 1) {
         $_SESSION['username'] = $username;
         $_SESSION['success'] = "You are now logged in";
-        header('location: homepage.php');
+        header('location: index.php');
       }else {
         array_push($errors, "Wrong username/password combination");
       }
