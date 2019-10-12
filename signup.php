@@ -1,12 +1,12 @@
 <?php
 // Include config file
-include('server.php');
+require_once('server.php');
+?>
 
-$design = <<<BODY
 <html >
   <head>
      
-    <link rel="stylesheet" type="text/css" href="./css/loginSignup.css" > 
+    <link rel="stylesheet" type="text/css" href="./assets/css/loginSignup.css" > 
 
     <link href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.0/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
    <script src="//maxcdn.bootstrapcdn.com/bootstrap/3.3.0/js/bootstrap.min.js"></script>
@@ -23,7 +23,7 @@ $design = <<<BODY
 
   </head>
 <body class="text-center">
-    <img src="./images/cosaic.png" alt="cosaic" class = "cosaic">
+    <img src="./assets/images/cosaic.png" alt="cosaic" class = "cosaic">
     <div class="whole-group" >
     <!-- Main Form -->
     <div class="login-form-1">  
@@ -66,8 +66,5 @@ $design = <<<BODY
     </div>
   </body>
 
-</html>
-BODY;
-echo $design;
-?>         
+</html>     
           
