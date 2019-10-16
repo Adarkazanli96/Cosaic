@@ -49,7 +49,12 @@ require_once('server.php');
                   <input type="password" class="form-control" name="pass2" placeholder="confirm password">
                 </div>
                 <div class="form-group">
-                  <input type="email" class="form-control"name="email" placeholder="Email">
+                  <label for="lg_username" class="sr-only">Your name</label>
+                  <input type="text" class="form-control" placeholder="Your name">
+                </div>
+                <div class="form-group">
+                  <label for="lg_username" class="sr-only">Lets Cosaic and friend know a little about yourself!</label>
+                  <input type="text" class="form-control" placeholder="description">
                 </div>
                 <button type="submit" formmethod="post" formaction="server.php" class="login-button" name ="signup"><i class="fa fa-chevron-right"></i>
                 </button>
