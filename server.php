@@ -13,6 +13,7 @@ $username = "";
 $password = "";
 $description ="";
 $fullname ="";
+$image="";
 
 $username_error="";
 $password_error = "";
@@ -129,24 +130,29 @@ if(isset($_POST['login']) && $_SERVER['REQUEST_METHOD'] == "POST"){
       }
     }
 }
-// UPLOAD PROFILE PICTURE
-if(isset($_POST['insert']) && $_SERVER['REQUEST_METHOD'] == "POST"){
-  header('location: tst.php');
-  $query= mysql_query("SELECT * FROM users WHERE username = '".$_SESSION['username']."' ");
+// UPLOAD PROFILE PICTURE ON POP-UP FORM 
+if(isset($_POST['insert'])){
+  $query= "SELECT * FROM users WHERE username = '".$_SESSION['username']."' ";
   $results = mysqli_query($db, $query);
   if (mysqli_num_rows($results) == 1) {
-
-    $img = mysqli_real_escape_string($db, $_POST['image']);
-
-    $file = addslashes(file_get_contents($_FILES[$img]["tmp_name"]));  
-    $query2 = "INSERT INTO users(profile_img) VALUES ('$file')";  
-    if(mysqli_query($db, $query2)){  
+    $file = addslashes(file_get_contents($_FILES["image"]["tmp_name"]));  
+    $query = "UPDATE users SET profile_img = '$file' WHERE username = '".$_SESSION['username']."' ";
+    if(mysqli_query($db, $query) == 1){  
          echo '<script>alert("Image Inserted into Database")</script>';  
     } 
   }
+  // DISPLAY PROFILE PICTURE ON INDEX PAGE
+  $query2 = "SELECT profile_img FROM users WHERE username = '".$_SESSION['username']."' ";
+  $result2 = mysqli_query($db, $query2);
+  if (mysqli_num_rows($result2) ==1 ) {
+    $row=mysqli_fetch_row($result2);
+    $_SESSION['profile_pricture'] = '<img src="data:image/jpeg;base64,'.base64_encode($row[0] ).'" height="250" width="250" />'; 
+  }
+}else{
+  $_SESSION['profile_pricture'] = '<img src=./assets/images/default_profile.jpeg  height="250" width="250" />'; 
 }
 
 
 
 
-?>
+

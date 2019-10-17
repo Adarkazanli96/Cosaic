@@ -28,33 +28,44 @@ if (!isset($_SESSION['username'])) {
                 <li>
                     <a href="index.php" class="current">Home</a>
                 </li>
+
                 <!-- POPUP/UPDATE PROFILE FORM ON NAV BAR -->
                 <li>
                     <a onclick="openForm()">Profile</a>
                 </li>
 
+
+
                 <div class="form-popup" id="myForm">
-                <form action="index.php" class="form-container" method = "post">
-
-                    <label><b>Description</b></label>
-                    <input type="text" placeholder="Enter your new description" required>
-                    <label for="email"><b>Profile picture</b></label>
-
-
-                    <div class="container" style="width:500px;">  
-                        <br />  
-                        <form method="post" enctype="multipart/form-data">  
-                             <input type="file" name="image" id="image" /> 
-                        </form>  
-                    </div>
-
-                    <button type="submit" formmethod="post" formaction="server.php" class="btn btn-info" name="insert" >Save</button>
-                    
-                    <button type="button" class="btn cancel" onclick="closeForm()">Close</button>
-
-                </form>
+                    <form class="form-container" method="post" enctype="multipart/form-data">
+                        <label>Description</label>
+                        <input type="text" placeholder="Enter your new description" required>
+                        <label>Profile picture</label>
+                        <input type="file" name="image" id="chooseFile"  />   
+                        <input type="submit" name="insert" id="insert" value="Insert" class="btn btn-info" /> 
+                        <button type="button" class="btn cancel" onclick="closeForm()">Close</button>
+                    </form>
                 </div>
-
+                <!-- CHECK IF INPUT FILE IS A VALID IMAGE -->
+                <script>  
+                     $(document).ready(function(){  
+                          $('#insert').click(function(){  
+                               var image_name = $('#image').val();  
+                               if(image_name == ''){  
+                                    alert("Please Select Image");  
+                                    return false;  
+                               }else{  
+                                    var extension = $('#image').val().split('.').pop().toLowerCase();  
+                                    if(jQuery.inArray(extension, ['gif','png','jpg','jpeg']) == -1){  
+                                         alert('Invalid Image File');  
+                                         $('#image').val('');  
+                                         return false;  
+                                    }  
+                               }  
+                          });  
+                     });  
+                </script>
+                <!-- OPEN AND CLOSE PROFILE FORM -->
                 <script>
                     function openForm() {
                       document.getElementById("myForm").style.display = "block";
@@ -83,9 +94,19 @@ if (!isset($_SESSION['username'])) {
     <!-- DISPLAY PROFILE INFOR  -->  
     <div class="jumbotron">
         <div class="container" >
-
-            <h2 class="display-3">WELCOME TO <?php echo $_SESSION['username']; ?> 's page </h2>
-            <p> A little about me: <?php echo $_SESSION['description']; ?> </p>
+            <img id ="profile_img">
+                <?php 
+                    if($_SESSION['profile_pricture']){
+                        echo $_SESSION['profile_pricture']; 
+                    } 
+                ?>
+                
+            </img>
+            <div id ="user_infor">
+                <p id ="profile_content" >WELCOME TO <?php echo $_SESSION['username']; ?> 's page </p>
+                <p id ="profile_content" > A little about me: <?php echo $_SESSION['description']; ?> </p>
+            </div>
+            
         </div>
     </div>
     

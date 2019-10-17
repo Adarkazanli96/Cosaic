@@ -37,15 +37,28 @@ body {font-family: 'Varela Round';}
 .form-container .btn {
   background-color: #aaaaaa;
   color: white;
-  padding: 16px 20px;
+  padding: 10px 10px;
   border: none;
   cursor: pointer;
-  width: 100%;
-  margin-bottom:10px;
+  width: 40%;
+  margin:10px 10px 10px 12px;
   opacity: 0.8;
 }
 
 /* Add a red background color to the cancel button */
 .form-container .cancel {
   background-color: #aaaaaa;
+}
+#chooseFile{
+  margin: 2px 0 10px 10px;
+}
+#profile_img{
+  vertical-align: middle;
+}
+#profile_content{
+  margin: 2px;
+}
+#user_infor{
+  display:inline-block;
+  margin: 50px;
 }
