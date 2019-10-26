@@ -1,6 +1,5 @@
 <?php
-// Include config file
-require_once('server.php');
+require_once('includes/server.php');
 ?>
 
 <html >
@@ -49,7 +48,7 @@ require_once('server.php');
                     <label for="lg_remember">remember</label>
                   </div>
 
-                  <button type="submit" formmethod="post" formaction="server.php" class="login-button" name ="login"><i class="fa fa-chevron-right"></i></button>
+                  <button type="submit" formmethod="post" class="login-button" name ="login"><i class="fa fa-chevron-right"></i></button>
                 </form>
               </div>
 

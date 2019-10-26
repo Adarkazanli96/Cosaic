@@ -1,6 +1,5 @@
 <?php
-// Include config file
-require_once('server.php');
+require_once('includes/server.php'); // server.php handles loogic for logging in and signing up
 ?>
 
 <html >
@@ -34,9 +33,15 @@ require_once('server.php');
             <div class="login-group">
               <form action = "login.php" method = "post">
                 <div class="form-group">
+                  <input type="text" class="form-control"name="first_name" placeholder="First Name">
+                </div>
+                <div class="form-group">
+                  <input type="text" class="form-control"name="last_name" placeholder="Last Name">
+                </div>
+                <div class="form-group">
                   <label for="lg_username" class="sr-only">Username</label>
                   <!-- name = name -->
-                  <input type="text" class="form-control" name="name" placeholder="username">
+                  <input type="text" class="form-control" name="username" placeholder="username">
                 </div>
                 <div class="form-group">
                   <label for="lg_password" class="sr-only">Password</label>
@@ -48,10 +53,7 @@ require_once('server.php');
                   <!-- pass=  pass -->
                   <input type="password" class="form-control" name="pass2" placeholder="confirm password">
                 </div>
-                <div class="form-group">
-                  <input type="email" class="form-control"name="email" placeholder="Email">
-                </div>
-                <button type="submit" formmethod="post" formaction="server.php" class="login-button" name ="signup"><i class="fa fa-chevron-right"></i>
+                <button type="submit" formmethod="post" class="login-button" name ="signup"><i class="fa fa-chevron-right"></i>
                 </button>
               </form>
             </div>
