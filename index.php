@@ -8,9 +8,11 @@ include("includes/classes/User.php");
 
 
     <?php
+
+    require_once("includes/config.php"); // get database object
     
-    echo "Welcome to the member's area, " . $_SESSION['username'] . "!";
-    $user_obj = new User($con, $userLoggedIn);
+    $user_obj = new User($con, $_SESSION['username']);
+    echo "Welcome to the member's area, " . $user_obj->getFirstAndLastName() . "!";
     ?>
 
 </body>

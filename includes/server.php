@@ -2,15 +2,10 @@
 
 // this file handles login and signup logic for users
 
-require_once("config.php");
 session_start();
 
-//login to database
-$db = mysqli_connect($servername, $username, $password, $dbname);
-//if ($conn->connect_error) die($conn->connect_error);
-if ($db->connect_error) {
-  die("Connection failed: " . $db->connect_error);
-}
+require_once("config.php");
+
 $username = "";
 $password = "";
 $first_name = "";
@@ -30,17 +25,17 @@ $query = "CREATE TABLE `users` (
   `password` varchar(100) NOT NULL
 )";
 
-$result = $db->query($query);
+$result = $con->query($query);
 
 //SIGN UP
 if(isset($_POST['signup']) && $_SERVER['REQUEST_METHOD'] == "POST"){
 //if(isset($_POST['signup'])){
   //echo "signup success";
-  $username = mysqli_real_escape_string($db, $_POST['username']);
-  $first_name = mysqli_real_escape_string($db, $_POST['first_name']);
-  $last_name = mysqli_real_escape_string($db, $_POST['last_name']);
-  $password_1 = mysqli_real_escape_string($db, $_POST['pass']);
-  $password_2 = mysqli_real_escape_string($db, $_POST['pass2']);
+  $username = mysqli_real_escape_string($con, $_POST['username']);
+  $first_name = mysqli_real_escape_string($con, $_POST['first_name']);
+  $last_name = mysqli_real_escape_string($con, $_POST['last_name']);
+  $password_1 = mysqli_real_escape_string($con, $_POST['pass']);
+  $password_2 = mysqli_real_escape_string($con, $_POST['pass2']);
 
   // form validation: ensure that the form is correctly filled ...
   // by adding (array_push()) corresponding error unto $errors array
@@ -57,7 +52,7 @@ if(isset($_POST['signup']) && $_SERVER['REQUEST_METHOD'] == "POST"){
   // first check the database to make sure 
   // a user does not already exist with the same username
   $user_check_query = "SELECT * FROM users WHERE username='$username'";
-  $result = mysqli_query($db, $user_check_query);
+  $result = mysqli_query($con, $user_check_query);
   $user = mysqli_fetch_assoc($result);
   
   if ($user) { // if user exists
@@ -73,7 +68,7 @@ if(isset($_POST['signup']) && $_SERVER['REQUEST_METHOD'] == "POST"){
 
     $query = "INSERT INTO users (username, first_name, last_name, password) 
           VALUES('$username', '$first_name', '$last_name', '$password')";
-    mysqli_query($db, $query);
+    mysqli_query($con, $query);
     $_SESSION['username'] = $username;
     header('location: index.php');
   }
@@ -82,8 +77,8 @@ if(isset($_POST['signup']) && $_SERVER['REQUEST_METHOD'] == "POST"){
 //LOGIN FORM
 if(isset($_POST['login']) && $_SERVER['REQUEST_METHOD'] == "POST"){
 //if(isset($_POST['login'])){
-    $username = mysqli_real_escape_string($db, $_POST['name']);
-    $password = mysqli_real_escape_string($db, $_POST['pass']);
+    $username = mysqli_real_escape_string($con, $_POST['name']);
+    $password = mysqli_real_escape_string($con, $_POST['pass']);
 
     if (empty($username)) {
       array_push($errors, "Username is required");
@@ -96,7 +91,7 @@ if(isset($_POST['login']) && $_SERVER['REQUEST_METHOD'] == "POST"){
 
       $password = md5($password);
       $query = "SELECT * FROM users WHERE username='$username' AND password='$password'";
-      $results = mysqli_query($db, $query);
+      $results = mysqli_query($con, $query);
       if (mysqli_num_rows($results) == 1) {
         $_SESSION['username'] = $username;
         $_SESSION['success'] = "You are now logged in";
