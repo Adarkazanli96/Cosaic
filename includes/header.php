@@ -17,6 +17,7 @@ if (!isset($_SESSION['username'])) {
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/css/bootstrap.min.css">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/js/bootstrap.min.js"></script>
+    <script src="main.js"></script>
 </head>
 
 <body>
@@ -45,11 +46,17 @@ if (!isset($_SESSION['username'])) {
                     <a href="logout.php">Logout</a>
                 </li>
             </ul>
-            <form class="navbar-form navbar-right" role="search">
+            <form class="navbar-form" role="search" action = "search.php" method = "GET" name = "search_form">
                 <div class="form-group">
-                    <input type="text" class="form-control" placeholder="Search">
+                    <input type="text" class="form-control" placeholder="Search" onkeyup="getLiveSearchUsers(this.value)" name = "q" autocomplete = "off" id="search_text_input"/>
                 </div>
                 <button type="submit" class="btn btn-default">Submit</button>
             </form>
+
+            <div class="search_results">
+            </div>
+
+            <div class = "search_results_footer_empty">
+            </div>
         </div>
     </nav>
