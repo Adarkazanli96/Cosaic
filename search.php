@@ -16,7 +16,7 @@ else{
 
     <?php
         if($query===""){
-            echo "You must enter something in the search box.";
+            echo "<p style = 'padding-left: 20px'>You must enter something in the search box.</p>";
         }
         else{
             $names = explode(" ", $query);
@@ -32,42 +32,34 @@ else{
             // if query has one word only, search first names or last names
             else{
                 $usersReturnedQuery = mysqli_query($con, "SELECT * FROM users WHERE (first_name LIKE '$names[0]%' OR last_name LIKE '$names[0]%') LIMIT 8");
-            
-
             }
 
 
+            // check if results were found
+            if(mysqli_num_rows($usersReturnedQuery) === 0){
+                echo "<p style = 'padding-left: 20px'>We can't find anyone with the name like: <span style='font-style: italic'>" . $query . "</span></p>";
+            }
+            else{
+            echo "<p style = 'padding-left: 20px'>" . mysqli_num_rows($usersReturnedQuery) . " results were found: <br><br></p>";
+            }
 
-// check if results were found
-if(mysqli_num_rows($usersReturnedQuery) === 0){
-    echo "<p style = 'padding-left: 20px'>We can't find anyone with a " . $type . " like: " . $query . "</p>";
-}
-else{
-    echo "<p style = 'padding-left: 20px'>" . mysqli_num_rows($usersReturnedQuery) . " results were found: <br><br></p>";
-}
 
-
-// display results
-while($row = mysqli_fetch_array($usersReturnedQuery)) {
-    echo "<div class='search_result' style = 'padding-left: 20px'>
-            <div class='result_profile_pic'>
-                <a href='profile.php?profile_username=" . $row['username'] . "'>
-                <div class = 'liveSearchProfilePic'>
-                <img src='../../assets/images/icons/default_user_icon.png' alt='s' style='width: 40px;height:auto'/>
+            // display results
+            while($row = mysqli_fetch_array($usersReturnedQuery)) {
+            echo "<div class='search_result' style = 'padding-left: 20px'>
+                <div class='result_profile_pic'>
+                    <a href='profile.php?profile_username=" . $row['username'] . "'>
+                        <div class = 'liveSearchProfilePic'>
+                            <img src='../../assets/images/icons/default_user_icon.png' alt='s' style='width: 40px;height:auto'/>
+                        </div>
+                        " . $row['first_name'] . " " . $row['last_name'] . "
+                        <p> " . $row['username'] . "</p>
+                    </a>
+                </div>
             </div>
-                " . $row['first_name'] . " " . $row['last_name'] . "
-                <p> " . $row['username'] . "</p>
-                </a>
-            </div>
-    </div>
-    <hr>
-    ";
-} // end while
-
+            <hr>";
         }
-
-
-        
+    }
     ?>
 
 </div>
