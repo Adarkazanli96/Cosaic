@@ -28,6 +28,9 @@ if (!isset($_SESSION['username'])) {
                 <li>
                     <a href="index.php" class="current">Home</a>
                 </li>
+                <li>
+                    <a >Create</a>
+                </li>
 
                 <!-- POPUP/UPDATE PROFILE FORM ON NAV BAR -->
                 <li>
@@ -39,42 +42,37 @@ if (!isset($_SESSION['username'])) {
                 <div class="form-popup" id="myForm">
                     <form class="form-container" method="post" enctype="multipart/form-data">
                         <label>Description</label>
-                        <input type="text" placeholder="Enter your new description" required>
+                        <input type="text" name ="user_infor" placeholder="Enter your new description" >
                         <label>Profile picture</label>
                         <input type="file" name="image" id="chooseFile"  />   
+
                         <input type="submit" name="insert" id="insert" value="Insert" class="btn btn-info" /> 
                         <button type="button" class="btn cancel" onclick="closeForm()">Close</button>
+
+                        <!-- CHECK IF INPUT FILE IS A VALID IMAGE -->
+                        <script>  
+                             $(document).ready(function(){  
+                                  $('#insert').click(function(){  
+                                       var image_name = $('#image').val();  
+                                       if(image_name == ''){  
+                                            alert("Please Select Image");  
+                                            return false;  
+                                       }else{  
+                                            var extension = $('#image').val().split('.').pop().toLowerCase();  
+                                            if(jQuery.inArray(extension, ['gif','png','jpg','jpeg']) == -1){  
+                                                 alert('Invalid Image File');  
+                                                 $('#image').val('');  
+                                                 return false;  
+                                            }  
+                                       }  
+                                  });  
+                             });  
+                        </script>
+
+
                     </form>
                 </div>
-                <!-- CHECK IF INPUT FILE IS A VALID IMAGE -->
-                <script>  
-                     $(document).ready(function(){  
-                          $('#insert').click(function(){  
-                               var image_name = $('#image').val();  
-                               if(image_name == ''){  
-                                    alert("Please Select Image");  
-                                    return false;  
-                               }else{  
-                                    var extension = $('#image').val().split('.').pop().toLowerCase();  
-                                    if(jQuery.inArray(extension, ['gif','png','jpg','jpeg']) == -1){  
-                                         alert('Invalid Image File');  
-                                         $('#image').val('');  
-                                         return false;  
-                                    }  
-                               }  
-                          });  
-                     });  
-                </script>
-                <!-- OPEN AND CLOSE PROFILE FORM -->
-                <script>
-                    function openForm() {
-                      document.getElementById("myForm").style.display = "block";
-                    }
-
-                    function closeForm() {
-                      document.getElementById("myForm").style.display = "none";
-                    }
-                </script>               
+                            
             </ul> <!-- POPUP/UPDATE PROFILE FORM ON NAV BAR--- DONE HERE! --> 
 
             <ul class="nav navbar-nav navbar-right">
@@ -133,4 +131,16 @@ if (!isset($_SESSION['username'])) {
 
 </body>
 </html>
+
+
+<!-- OPEN AND CLOSE PROFILE FORM -->
+<script>
+    function openForm() {
+      document.getElementById("myForm").style.display = "block";
+    }
+
+    function closeForm() {
+      document.getElementById("myForm").style.display = "none";
+    }
+</script>   
 

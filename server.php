@@ -25,7 +25,8 @@ $query = "CREATE TABLE IF NOT EXISTS `users` (
   `username` varchar(100) PRIMARY KEY,
   `name` varchar(100) NOT NULL,
   `description` varchar(250)NULL,
-  `password` varchar(100) NOT NULL
+  `password` varchar(100) NOT NULL,
+  `profile_img` BLOB NULL 
 )";
 
 //creat posts
@@ -94,6 +95,7 @@ if(isset($_POST['signup']) && $_SERVER['REQUEST_METHOD'] == "POST"){
     mysqli_query($db, $query);
     $_SESSION['username'] = $username;
     $_SESSION['description'] = $description;
+    signUp_profilePicture();
     header('location: index.php');
   }
 }
@@ -115,7 +117,11 @@ if(isset($_POST['login']) && $_SERVER['REQUEST_METHOD'] == "POST"){
       $result = mysqli_query($db, $sql);
       $row=mysqli_fetch_row($result);
 
+      $query2 = "SELECT profile_img FROM users WHERE username='$username'";
+      $result2 = mysqli_query($db, $query2);
+      $row2=mysqli_fetch_row($result2);
 
+      
       $password = md5($password);
       $query = "SELECT * FROM users WHERE username='$username' AND password='$password'";
       $results = mysqli_query($db, $query);
@@ -124,35 +130,56 @@ if(isset($_POST['login']) && $_SERVER['REQUEST_METHOD'] == "POST"){
       if (mysqli_num_rows($results) == 1) {
         $_SESSION['username'] = $username;
         $_SESSION['description'] = $row[0];
+        $_SESSION['profile_pricture'] = '<img src="data:image/jpeg;base64,'.base64_encode($row2['0'] ).'" height="250" width="250" />';
         header('location: index.php');
       }else {
         array_push($errors, "Wrong username/password combination");
       }
     }
 }
+
+
 // UPLOAD PROFILE PICTURE ON POP-UP FORM 
 if(isset($_POST['insert'])){
-  $query= "SELECT * FROM users WHERE username = '".$_SESSION['username']."' ";
-  $results = mysqli_query($db, $query);
-  if (mysqli_num_rows($results) == 1) {
-    $file = addslashes(file_get_contents($_FILES["image"]["tmp_name"]));  
-    $query = "UPDATE users SET profile_img = '$file' WHERE username = '".$_SESSION['username']."' ";
-    if(mysqli_query($db, $query) == 1){  
-         echo '<script>alert("Image Inserted into Database")</script>';  
-    } 
+  if (file_exists($_FILES["image"]["tmp_name"])){
+    $file = addslashes(file_get_contents($_FILES["image"]["tmp_name"]));
+    //update the table with new picture
+    $query = "UPDATE users 
+              SET profile_img = '$file' 
+              WHERE username = '".$_SESSION['username']."' ";
+
+    $result = mysqli_query($db, $query);
+    $query2 = "SELECT profile_img FROM users WHERE username = '".$_SESSION['username']."' ";
+    $result2 = mysqli_query($db, $query2);
+    $row = mysqli_fetch_row($result2);
+
+
+    $_SESSION['profile_pricture'] = '<img src="data:image/jpeg;base64,'.base64_encode($row[0]).'" height="250" width="250" />'; 
+    echo '<script>alert("Image Inserted into Database")</script>';  
+  }else{
+    echo '<script>alert("No Image File Found")</script>';
   }
-  // DISPLAY PROFILE PICTURE ON INDEX PAGE
-  $query2 = "SELECT profile_img FROM users WHERE username = '".$_SESSION['username']."' ";
-  $result2 = mysqli_query($db, $query2);
-  if (mysqli_num_rows($result2) ==1 ) {
-    $row=mysqli_fetch_row($result2);
-    $_SESSION['profile_pricture'] = '<img src="data:image/jpeg;base64,'.base64_encode($row[0] ).'" height="250" width="250" />'; 
+
+
+  
+  if(!empty($_POST['user_infor'] )){
+    $description = mysqli_real_escape_string($db, $_POST['user_infor']);
+    $query = "UPDATE users 
+              SET description = '$description' 
+              WHERE username = '".$_SESSION['username']."' ";
+    $result = mysqli_query($db, $query);
+    $query2 = "SELECT description FROM users WHERE username = '".$_SESSION['username']."' ";
+    $result2 = mysqli_query($db, $query2);
+    $row = mysqli_fetch_row($result2);
+    $_SESSION['description'] = $row[0];
   }
-}else{
-  $_SESSION['profile_pricture'] = '<img src=./assets/images/default_profile.jpeg  height="250" width="250" />'; 
+
 }
 
-
-
-
-
+function signUp_profilePicture(){
+  $profile_img = '<img src="assets/images/default_profile.jpeg" height="250" width="250" />';
+  $_SESSION['profile_pricture'] = $profile_img; 
+  $query = "INSERT INTO users (profile_img)VALUES('$profile_img')";
+  mysqli_query($db, $query);
+  
+}
