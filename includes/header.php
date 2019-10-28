@@ -14,6 +14,7 @@ if (!isset($_SESSION['username'])) {
     <title>Cosaic</title>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" type="text/css" href="./assets/css/styles.css" > 
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/css/bootstrap.min.css">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/js/bootstrap.min.js"></script>
@@ -46,17 +47,18 @@ if (!isset($_SESSION['username'])) {
                     <a href="logout.php">Logout</a>
                 </li>
             </ul>
-            <form class="navbar-form" role="search" action = "search.php" method = "GET" name = "search_form">
+            
+            <form class="navbar-form navbar-left" role="search" action = "search.php" method = "GET" name = "search_form">
                 <div class="form-group">
                     <input type="text" class="form-control" placeholder="Search" onkeyup="getLiveSearchUsers(this.value)" name = "q" autocomplete = "off" id="search_text_input"/>
+                    <button type="submit" class="btn btn-default">Submit</button>
+                        <div class = "results-wrapper">
+                            <div class="search_results"></div>
+                            <div class="search_results_footer_empty"></div>
+                        </div>
                 </div>
-                <button type="submit" class="btn btn-default">Submit</button>
             </form>
 
-            <div class="search_results">
-            </div>
 
-            <div class = "search_results_footer_empty">
-            </div>
         </div>
     </nav>

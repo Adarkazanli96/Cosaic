@@ -11,7 +11,7 @@ if(isset($_GET['profile_username'])){
 
 ?>
 
-    <div>This is <?php echo $user_array['first_name'] . " " . $user_array['last_name']; ?> 's profile</div>
+    <div>This is <?php echo $user_array['first_name'] . " " . $user_array['last_name']; ?>'s profile</div>
 </body>
 
 </html>
