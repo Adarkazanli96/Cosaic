@@ -16,6 +16,7 @@ $(document).click(function(e){
     if(e.target.class != "search_results" && e.target.id != "search_text_input"){
         $(".search_results").html("");
         $('.search_results_footer').html("");
+        $('.results-wrapper').css("border", "")
         $('.search_results_footer').toggleClass("search_results_footer_empty");
         $('.search_results_footer').toggleClass("search_results_footer");
     }
