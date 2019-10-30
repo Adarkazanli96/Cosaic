@@ -3,7 +3,6 @@
 // this file handles login and signup logic for users
 
 session_start();
-
 require_once("config.php");
 
 //login to database
