@@ -25,7 +25,7 @@ if($query != ""){
         echo "<div class='resultDisplay'>
             <a href='profile.php?profile_username=" . $row['username'] . "' style='color: #1485BD'>
                 <div class = 'liveSearchProfilePic'>
-                    <img src='../../assets/images/icons/default_user_icon.png' alt='s' style='width: 40px;height:auto'/>
+                    <img src='../../assets/images/default_profile.jpeg' alt='s' style='width: 40px;height:auto'/>
                 </div>
                 <div class = 'liveSearchText'>
                     " . $row['first_name'] . " " . $row['last_name'] . "

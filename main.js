@@ -1,17 +1,5 @@
 
-// this code runs when the document renders
-/*$(document).ready(function(){
-
-    // animate search bar on click (only for large screens)
-    $('#search_text_input').focus(function(){
-        if(window.matchMedia( "(min-width: 800px)").matches){
-            $(this).animate({width : '250px'}, 200)
-        }
-    })
-
-})*/
-
-// clicking document closes search results
+// clicking anywhere on the document closes search results
 $(document).click(function(e){
     if(e.target.class != "search_results" && e.target.id != "search_text_input"){
         $(".search_results").html("");
@@ -21,8 +9,6 @@ $(document).click(function(e){
         $('.search_results_footer').toggleClass("search_results_footer");
     }
 })
-
-
 
 //javascript code for dynamic searching
 function getLiveSearchUsers(value){
@@ -48,3 +34,28 @@ function getLiveSearchUsers(value){
     })
 }
 
+function openForm() {
+    document.getElementById("myForm").style.display = "block";
+}
+
+function closeForm() {
+    document.getElementById("myForm").style.display = "none";
+}
+
+// check if input file is valid
+$(document).ready(function(){  
+    $('#insert').click(function(){  
+         var image_name = $('#image').val();  
+         if(image_name == ''){  
+              alert("Please Select Image");  
+              return false;  
+         }else{  
+              var extension = $('#image').val().split('.').pop().toLowerCase();  
+              if(jQuery.inArray(extension, ['gif','png','jpg','jpeg']) == -1){  
+                   alert('Invalid Image File');  
+                   $('#image').val('');  
+                   return false;  
+              }  
+         }  
+    });  
+});  
