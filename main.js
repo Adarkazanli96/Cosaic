@@ -1,5 +1,5 @@
 
-// include this code when then document renders
+// this code runs when the document renders
 /*$(document).ready(function(){
 
     // animate search bar on click (only for large screens)
@@ -36,7 +36,6 @@ function getLiveSearchUsers(value){
         }
 
         $('.search_results').html(data)
-        //$('.search_results_footer').html(data)
         $('.search_results_footer').html("<a href='search.php?q=" + value + "'>See All Results</a>")
         $('.results-wrapper').css("border", "solid 1px #e7e7e7")
 

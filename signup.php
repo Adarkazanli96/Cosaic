@@ -33,15 +33,15 @@ require_once('includes/server.php'); // server.php handles loogic for logging in
             <div class="login-group">
               <form action = "login.php" method = "post">
                 <div class="form-group">
-                  <input type="text" class="form-control"name="first_name" placeholder="First Name">
+                  <input type="text" class="form-control"name="first_name" placeholder="First Name" autocomplete = "off">
                 </div>
                 <div class="form-group">
-                  <input type="text" class="form-control"name="last_name" placeholder="Last Name">
+                  <input type="text" class="form-control"name="last_name" placeholder="Last Name" autocomplete = "off">
                 </div>
                 <div class="form-group">
                   <label for="lg_username" class="sr-only">Username</label>
                   <!-- name = name -->
-                  <input type="text" class="form-control" name="username" placeholder="username">
+                  <input type="text" class="form-control" name="username" placeholder="username" autocomplete = "off">
                 </div>
                 <div class="form-group">
                   <label for="lg_password" class="sr-only">Password</label>

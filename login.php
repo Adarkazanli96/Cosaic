@@ -36,7 +36,7 @@ require_once('includes/server.php');
                   <div class="form-group">
                     <label for="lg_username" class="sr-only">Username</label>
                     <!-- name = name -->
-                    <input type="text" class="form-control" name="name" placeholder="username">
+                    <input type="text" class="form-control" name="name" placeholder="username" autocomplete = "off">
                   </div>
                   <div class="form-group">
                     <label for="lg_password" class="sr-only">Password</label>

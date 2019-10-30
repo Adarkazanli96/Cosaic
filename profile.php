@@ -1,6 +1,6 @@
 <?php
 include('includes/header.php');
-require_once("includes/config.php"); // get database configurations
+require_once("includes/server.php"); // get database configurations
 
 if(isset($_GET['profile_username'])){
     $username = $_GET['profile_username'];

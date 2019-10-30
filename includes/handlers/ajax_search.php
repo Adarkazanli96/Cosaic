@@ -1,5 +1,5 @@
 <?php
-include("../config.php");
+include("../server.php");
 include("../classes/User.php");
 
 $query = $_POST['query'];

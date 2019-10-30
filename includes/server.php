@@ -6,6 +6,12 @@ session_start();
 
 require_once("config.php");
 
+//login to database
+$con = mysqli_connect($servername, $username, $password, $dbname);
+if ($con->connect_error) {
+  die("Connection failed: " . $con->connect_error);
+}
+
 $username = "";
 $password = "";
 $first_name = "";
@@ -14,6 +20,7 @@ $last_name = "";
 $username_error="";
 $password_error = "";
 $errors = array(); 
+
 
 
 //create users
