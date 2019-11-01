@@ -120,7 +120,7 @@ if(isset($_POST['login']) && $_SERVER['REQUEST_METHOD'] == "POST"){
           $profile_img = '<img src="assets/images/default_profile.jpeg" height="250" width="250" />';
           $_SESSION['profile_picture'] = $profile_img;
         }else{
-          $_SESSION['profile_picture'] = '<img src="data:image/jpeg;base64,'.base64_encode($row2[0] ).'" height="250" width="250" />';
+          $_SESSION['profile_picture'] = '<img src="data:image/jpeg;base64,'.base64_encode($row2[0]).'" height="250" width="250" />';
         }
         header('location: index.php');
       }else {

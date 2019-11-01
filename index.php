@@ -35,21 +35,11 @@ require_once ('includes/server.php')
                 <li>
                     <a href="index.php" class="current">Home</a>
                 </li>
-                <li>
-                    <a >Create</a>
-                </li>
-
-                <!-- POPUP/UPDATE PROFILE FORM ON NAV BAR -->
-                <li>
-                    <a onclick="openForm()">Profile</a>
-                </li>
-
-
 
                 <div class="form-popup" id="myForm">
                     <form class="form-container" method="post" enctype="multipart/form-data">
                         <label>Description</label>
-                        <input type="text" name ="user_infor" placeholder="Enter your new description" >
+                        <input type="text" name ="user_infor" placeholder="Enter your new description" autocomplete = "off">
                         <label>Profile picture</label>
                         <input type="file" name="image" id="chooseFile"  />   
 
@@ -90,13 +80,15 @@ require_once ('includes/server.php')
                     } 
                 ?>
                 
+
             </img>
             <div id ="user_infor">
-                <p id ="profile_content" >WELCOME TO <?php echo $_SESSION['username']; ?> 's page </p>
+                <p id ="profile_content" >WELCOME TO <?php echo $_SESSION['username']; ?>'s page </p>
                 <p id ="profile_content" > A little about me: <?php echo $_SESSION['description']; ?> </p>
             </div>
-            
+            <a onclick="openForm()" id = 'edit_profile_link' style="display: block;width: 250px;text-align: center;margin-top: 10;">Edit Profile</a>
         </div>
+
     </div>
     
     <!-- POSTS OF USERS -->

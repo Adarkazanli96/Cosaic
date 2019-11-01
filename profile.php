@@ -51,30 +51,7 @@ require_once ('includes/server.php')
             <ul class="nav navbar-nav">
                 <li>
                     <a href="index.php" class="current">Home</a>
-                </li>
-                <li>
-                    <a >Create</a>
-                </li>
-
-                <!-- POPUP/UPDATE PROFILE FORM ON NAV BAR -->
-                <li>
-                    <a onclick="openForm()">Profile</a>
-                </li>
-
-                <div class="form-popup" id="myForm">
-                    <form class="form-container" method="post" enctype="multipart/form-data">
-                        <label>Description</label>
-                        <input type="text" name ="user_infor" placeholder="Enter your new description" >
-                        <label>Profile picture</label>
-                        <input type="file" name="image" id="chooseFile"  />   
-
-                        <input type="submit" name="insert" id="insert" value="Insert" class="btn btn-info" /> 
-                        <button type="button" class="btn cancel" onclick="closeForm()">Close</button>
-
-
-                    </form>
-                </div>
-                            
+                </li>              
             </ul> <!-- POPUP/UPDATE PROFILE FORM ON NAV BAR--- DONE HERE! --> 
 
             <ul class="nav navbar-nav navbar-right">
@@ -94,9 +71,29 @@ require_once ('includes/server.php')
             </form>
         </div>
     </nav>
-
-    <div>This is <?php echo $user_array['first_name'] . " " . $user_array['last_name']; ?>'s profile</div>
         
+
+    <!-- DISPLAY PROFILE INFOR  -->  
+    <div class="jumbotron">
+        <div class="container" >
+            <img id ="profile_img">
+                <?php 
+                    if($user_array['profile_img'] === null){ // if no profile pic in database
+                        echo '<img src="assets/images/default_profile.jpeg" height="250" width="250" />';
+                    }else{
+                        echo '<img src="data:image/jpeg;base64,'.base64_encode($user_array['profile_img']).'" height="250" width="250" />';
+                    }
+                ?>
+
+            </img>
+            <div id ="user_infor">
+                <p id ="profile_content" >WELCOME TO <?php echo $user_array['first_name'] . " " . $user_array['last_name']; ?>'s page </p>
+                <p id ="profile_content" > Bio: <?php echo $user_array['description']; ?> </p>
+            </div>
+        </div>
+
+    </div>
+    
 
   </body>
 </html>
