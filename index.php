@@ -7,7 +7,6 @@ if (!isset($_SESSION['username'])) {
 }
 
 require_once ('includes/server.php')
-
 ?>
 
 <html>
@@ -32,21 +31,44 @@ require_once ('includes/server.php')
         </div>
         <div class="collapse navbar-collapse">
             <ul class="nav navbar-nav">
+				
+                <!-- HOME BUTTON -->
                 <li>
                     <a href="index.php" class="current">Home</a>
                 </li>
-
-                <div class="form-popup" id="myForm">
+                
+                <!-- POST BUTTON -->
+                <li>
+				  <a onclick="openCreatePostForm()" id = 'create-post' class="current">Post</a>
+                </li>
+                
+                <!-- CREATE POST POPUP -->
+			   <div class="form-popup" id="create-post-form">
                     <form class="form-container" method="post" enctype="multipart/form-data">
+						
+						<label>Image</label>
+                        <input type="file" name="post-image" id="post-image" accept="image/*"/>  
+						
+                        <label>Caption</label>
+                        <input type="text" name ="post-caption" placeholder="Insert caption" autocomplete = "off">
+                         
+                        <input type="submit" name="create-post" id="create-post" value="Post" class="btn btn-info" /> 
+                        <button type="button" class="btn cancel" onclick="closeForms()">Close</button>
+                    </form>
+                </div>
+
+			    <!-- EDIT PROFILE POPUP -->
+                <div class="form-popup" id="edit-profile-form">
+                    <form class="form-container" method="post" enctype="multipart/form-data">
+						
                         <label>Description</label>
                         <input type="text" name ="user_infor" placeholder="Enter your new description" autocomplete = "off">
+                        
                         <label>Profile picture</label>
                         <input type="file" name="image" id="chooseFile"  />   
 
-                        <input type="submit" name="insert" id="insert" value="Insert" class="btn btn-info" /> 
-                        <button type="button" class="btn cancel" onclick="closeForm()">Close</button>
-
-
+                        <input type="submit" name="insert" id="insert" value="Update" class="btn btn-info" /> 
+                        <button type="button" class="btn cancel" onclick="closeForms()">Close</button>
                     </form>
                 </div>
                             
@@ -63,14 +85,14 @@ require_once ('includes/server.php')
                     <button type="submit" class="btn btn-default">Submit</button>
                         <div class = "results-wrapper">
                             <div class="search_results"></div>
-                            <div class="search_results_footer_empty"></div>
-                        </div>
+						<div class="search_results_footer_empty"></div>
+					</div>
                 </div>
             </form>
         </div>
     </nav>
         
-    <!-- DISPLAY PROFILE INFOR  -->  
+    <!-- DISPLAY PROFILE INFORMATION  -->  
     <div class="jumbotron">
         <div class="container" >
             <img id ="profile_img">
@@ -80,13 +102,12 @@ require_once ('includes/server.php')
                     } 
                 ?>
                 
-
             </img>
             <div id ="user_infor">
                 <p id ="profile_content" >WELCOME TO <?php echo $_SESSION['username']; ?>'s page </p>
                 <p id ="profile_content" > A little about me: <?php echo $_SESSION['description']; ?> </p>
             </div>
-            <a onclick="openForm()" id = 'edit_profile_link' style="display: block;width: 250px;text-align: center;margin-top: 10;">Edit Profile</a>
+            <a onclick="openEditProfileForm()" id = 'edit_profile_link' style="display: block;width: 250px;text-align: center;margin-top: 10;">Edit Profile</a>
         </div>
 
     </div>

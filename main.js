@@ -34,12 +34,18 @@ function getLiveSearchUsers(value){
     })
 }
 
-function openForm() {
-    document.getElementById("myForm").style.display = "block";
+// Opens edit profile and create post popups. 
+function openEditProfileForm() {
+    document.getElementById("edit-profile-form").style.display = "block";
+}
+function openCreatePostForm() {
+    document.getElementById("create-post-form").style.display = "block";
 }
 
-function closeForm() {
-    document.getElementById("myForm").style.display = "none";
+// Closes the edit profile and create post popups. 
+function closeForms() {
+    document.getElementById("edit-profile-form").style.display = "none";
+    document.getElementById("create-post-form").style.display = "none";
 }
 
 // check if input file is valid
@@ -49,13 +55,15 @@ $(document).ready(function(){
          if(image_name == ''){  
               alert("Please Select Image");  
               return false;  
-         }else{  
-              var extension = $('#image').val().split('.').pop().toLowerCase();  
-              if(jQuery.inArray(extension, ['gif','png','jpg','jpeg']) == -1){  
-                   alert('Invalid Image File');  
-                   $('#image').val('');  
-                   return false;  
-              }  
+         }
+         else {  
+          var extension = $('#image').val().split('.').pop().toLowerCase();  4
+             
+          if(jQuery.inArray(extension, ['gif','png','jpg','jpeg']) == -1) {  
+               alert('Invalid Image File');  
+               $('#image').val('');  
+               return false;  
+            }  
          }  
     });  
 });  

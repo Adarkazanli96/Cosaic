@@ -3,7 +3,7 @@
 session_start();
 require_once("config.php");
 
-//login to database
+// Login to to the database
 $db = mysqli_connect($servername, $username, $password, $dbname);
 if ($db->connect_error) {
   die("Connection failed: " . $db->connect_error);
@@ -20,9 +20,12 @@ $username_error="";
 $password_error = "";
 $errors = array(); 
 
+//----------------------------------------------------------------------
+// CREATING TABLES
+//----------------------------------------------------------------------
 
-//create users
-$query = "CREATE TABLE IF NOT EXISTS `users` (
+// The queries for the users, posts, and create tables. 
+$users_table = "CREATE TABLE IF NOT EXISTS `users` (
   `username` varchar(100) PRIMARY KEY,
   `first_name` varchar(100) NOT NULL,
   `last_name` varchar(100) NOT NULL,
@@ -31,15 +34,32 @@ $query = "CREATE TABLE IF NOT EXISTS `users` (
   `profile_img` BLOB NULL 
 )";
 
-$result = $db->query($query);
+$posts_table = "CREATE TABLE IF NOT EXISTS `posts` (
+  `id` INT(8) NOT NULL AUTO_INCREMENT,
+  `likes` INT(8) DEFAULT 0,
+  `timestamp` DATETIME NOT NULL,
+  `caption` VARCHAR(1000) NULL,
+  `post_image` LONGBLOB NOT NULL, 
+  PRIMARY KEY (id)
+)";
+	
+$create_table = "CREATE TABLE IF NOT EXISTS `create` (
+  `username` VARCHAR(100), 
+  `id` INT(8)
+)"; 
 
+// Creates the users, posts, and create tables in the database. 
+$queries = array($users_table, $posts_table, $create_table); 
 
-$result = $db->query($query);
+foreach ($queries as $query) {
+  $db -> query($query);
+}
 
-//SIGN UP
+//----------------------------------------------------------------------
+// SIGN UP
+//----------------------------------------------------------------------
 if(isset($_POST['signup']) && $_SERVER['REQUEST_METHOD'] == "POST"){
-//if(isset($_POST['signup'])){
-  //echo "signup success";
+
   $username = mysqli_real_escape_string($db, $_POST['username']);
   $first_name = mysqli_real_escape_string($db, $_POST['first_name']);
   $last_name = mysqli_real_escape_string($db, $_POST['last_name']);
@@ -84,9 +104,11 @@ if(isset($_POST['signup']) && $_SERVER['REQUEST_METHOD'] == "POST"){
   }
 }
 
-//LOGIN FORM
+//----------------------------------------------------------------------
+// LOGIN FORM
+//----------------------------------------------------------------------
 if(isset($_POST['login']) && $_SERVER['REQUEST_METHOD'] == "POST"){
-//if(isset($_POST['login'])){
+
     $username = mysqli_real_escape_string($db, $_POST['name']);
     $password = mysqli_real_escape_string($db, $_POST['pass']);
 
@@ -101,38 +123,44 @@ if(isset($_POST['login']) && $_SERVER['REQUEST_METHOD'] == "POST"){
 
       $sql = "SELECT description FROM users WHERE username='$username'";
       $result = mysqli_query($db, $sql);
-      $row=mysqli_fetch_row($result);
+      $row = mysqli_fetch_row($result);
 
       $query2 = "SELECT profile_img FROM users WHERE username='$username'";
       $result2 = mysqli_query($db, $query2);
-      $row2=mysqli_fetch_row($result2);
+      $row2 = mysqli_fetch_row($result2);
 
-      
       $password = md5($password);
       $query = "SELECT * FROM users WHERE username='$username' AND password='$password'";
       $results = mysqli_query($db, $query);
 
-
       if (mysqli_num_rows($results) == 1) {
         $_SESSION['username'] = $username;
         $_SESSION['description'] = $row[0];
-        if($row2[0] === null){ // if no profile pic in database
+        
+        if($row2[0] === null) { // if no profile pic in database
           $profile_img = '<img src="assets/images/default_profile.jpeg" height="250" width="250" />';
           $_SESSION['profile_picture'] = $profile_img;
-        }else{
+        } 
+        else {
           $_SESSION['profile_picture'] = '<img src="data:image/jpeg;base64,'.base64_encode($row2[0]).'" height="250" width="250" />';
         }
         header('location: index.php');
-      }else {
-        array_push($errors, "Wrong username/password combination");
-      }
-    }
+        }
+	 else {
+	   array_push($errors, "Wrong username/password combination");
+	 }
   }
+}
 
+//----------------------------------------------------------------------
 // UPLOAD PROFILE PICTURE ON POP-UP FORM 
-if(isset($_POST['insert'])){
-  if (file_exists($_FILES["image"]["tmp_name"])){
+//----------------------------------------------------------------------
+if(isset($_POST['insert'])) {
+    
+  if (file_exists($_FILES["image"]["tmp_name"])) {
+      
     $file = addslashes(file_get_contents($_FILES["image"]["tmp_name"]));
+      
     //update the table with new picture
     $query = "UPDATE users 
               SET profile_img = '$file' 
@@ -143,11 +171,11 @@ if(isset($_POST['insert'])){
     $result2 = mysqli_query($db, $query2);
     $row = mysqli_fetch_row($result2);
 
-
     $_SESSION['profile_picture'] = '<img src="data:image/jpeg;base64,'.base64_encode($row[0]).'" height="250" width="250" />'; 
-    //echo '<script>alert("Image Inserted into Database")</script>';  
-  }else{
-    //echo '<script>alert("No Image File Found")</script>';
+    // echo '<script>alert("Image Inserted into Database")</script>';  
+  }
+  else {
+    // echo '<script>alert("No Image File Found")</script>';
   }
   
   if(!empty($_POST['user_infor'] )){
@@ -161,11 +189,30 @@ if(isset($_POST['insert'])){
     $row = mysqli_fetch_row($result2);
     $_SESSION['description'] = $row[0];
   }
-
 }
 
 function signUp_profilePicture(){
   $profile_img = '<img src="assets/images/default_profile.jpeg" height="250" width="250" />';
   $_SESSION['profile_picture'] = $profile_img;
+}
+
+//----------------------------------------------------------------------
+// CREATE POST
+//----------------------------------------------------------------------
+if (isset($_POST["create-post"])) {
+
+	// Only uploads if a file exists. 
+	if (file_exists($_FILES["post-image"]["tmp_name"])) {
+		
+	  // Retrieves the image file and caption. 
+	  $file = addslashes(file_get_contents($_FILES["post-image"]["tmp_name"]));
+	  $caption = $_POST["post-caption"]; 
+		
+	  // Inserts the post into the database. 
+	  $query = "INSERT INTO posts(timestamp, caption, post_image) 
+		VALUES (NOW(), '$caption', '$file')"; 
+
+	  $db -> query($query); 
+	}
 }
 ?>
