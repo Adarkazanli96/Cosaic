@@ -6,7 +6,8 @@ require_once('includes/server.php'); // server.php handles loogic for logging in
   <head>
      
     <title>Cosaic</title>  
-      
+    <link rel="icon" href="./assets/images/cosaic_favicon.png">
+    
     <link rel="stylesheet" type="text/css" href="./assets/css/loginSignup.css" > 
 
     <link href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.0/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">

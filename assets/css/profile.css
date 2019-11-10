@@ -52,13 +52,49 @@ body {font-family: 'Varela Round';}
 #chooseFile{
   margin: 2px 0 10px 10px;
 }
-#profile_img{
+#profile_img{ 
   vertical-align: middle;
 }
-#profile_content{
-  margin: 2px;
+
+#profile-username {
+  font-size: 3em; 
+  font-weight: bold; 
+  margin-bottom: 0.25em; 
 }
+
+#profile-name {
+  font-weight: bold; 
+  font-size: 1.2em; 
+  margin-bottom: 0px; 
+}
+
+#profile-description {
+  font-size: 1em; 
+}
+
 #user_infor{
   display:inline-block;
   margin: 50px;
+}
+
+
+/* IMAGE POSTS */
+.post {
+  margin-bottom: 2.5em;
+}
+
+.post .post-image {
+  margin-bottom: 1em;
+}
+
+.post .likes {
+  line-height: 10px; 
+  font-weight: bold; 
+  display: inline-block; 
+}
+
+.post .timestamp {
+  font-size: 0.8em; 
+  line-height: 0.1em; 
+  color: rgb(142, 142, 142);
 }

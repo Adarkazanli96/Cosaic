@@ -6,7 +6,8 @@ require_once('includes/server.php');
   <head>
      
    <title>Cosaic</title>  
-      
+   <link rel="icon" href="./assets/images/cosaic_favicon.png">
+    
    <link rel="stylesheet" type="text/css" href="./assets/css/loginSignup.css" > 
 
     <link href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.0/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
@@ -24,7 +25,7 @@ require_once('includes/server.php');
   </head>
 
   <body class="text-center">
-    <img src="./assets/images/cosaic.png" alt="cosaic" class = "cosaic">
+    <img src="./assets/images/cosaic_icon.png" alt="cosaic" class = "cosaic">
     <div class="whole-group" >
     <!-- Main Form -->
       <div class="login-form-1">  

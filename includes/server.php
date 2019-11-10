@@ -121,7 +121,7 @@ if(isset($_POST['login']) && $_SERVER['REQUEST_METHOD'] == "POST"){
 
     if (count($errors) == 0) {
 
-      $sql = "SELECT description FROM users WHERE username='$username'";
+      $sql = "SELECT description, profile_img FROM users WHERE username='$username'";
       $result = mysqli_query($db, $sql);
       $row = mysqli_fetch_row($result);
 
@@ -132,10 +132,14 @@ if(isset($_POST['login']) && $_SERVER['REQUEST_METHOD'] == "POST"){
       $password = md5($password);
       $query = "SELECT * FROM users WHERE username='$username' AND password='$password'";
       $results = mysqli_query($db, $query);
+      $user_info = $results -> fetch_assoc();
 
       if (mysqli_num_rows($results) == 1) {
         $_SESSION['username'] = $username;
         $_SESSION['description'] = $row[0];
+        
+        $_SESSION["first_name"] =  $user_info["first_name"]; 
+        $_SESSION["last_name"] = $user_info["last_name"]; 
         
         if($row2[0] === null) { // if no profile pic in database
           $profile_img = '<img src="assets/images/default_profile.jpeg" height="250" width="250" />';
@@ -146,9 +150,9 @@ if(isset($_POST['login']) && $_SERVER['REQUEST_METHOD'] == "POST"){
         }
         header('location: index.php');
         }
-	 else {
-	   array_push($errors, "Wrong username/password combination");
-	 }
+     else {
+       array_push($errors, "Wrong username/password combination");
+     }
   }
 }
 
@@ -208,11 +212,22 @@ if (isset($_POST["create-post"])) {
 	  $file = addslashes(file_get_contents($_FILES["post-image"]["tmp_name"]));
 	  $caption = $_POST["post-caption"]; 
 		
-	  // Inserts the post into the database. 
+	  // INSERT INTO POSTS TABLE
 	  $query = "INSERT INTO posts(timestamp, caption, post_image) 
-		VALUES (NOW(), '$caption', '$file')"; 
-
+		        VALUES (NOW(), '$caption', '$file')"; 
 	  $db -> query($query); 
+      
+      // Retrieves the username of the current user
+      $username = $_SESSION["username"]; 
+      
+      // Retrieves the id of the last post created
+      $result = mysqli_query($db, "SELECT id FROM posts ORDER BY id DESC LIMIT 1");      
+      $last_post = mysqli_fetch_row($result);
+      $post_id = $last_post[0]; 
+      
+      // INSERT INTO CREATE TABLE
+      $db -> query("INSERT INTO `create` (`username`, `id`) VALUES ('$username', '$post_id')"); 
+      // echo "Username: $username<br> ID: $post_id <br>"; 
 	}
 }
 ?>
