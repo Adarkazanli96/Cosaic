@@ -25,7 +25,7 @@ require_once('includes/server.php'); // server.php handles loogic for logging in
 
   </head>
 <body class="text-center">
-    <img src="./assets/images/cosaic.png" alt="cosaic" class = "cosaic">
+    <img src="./assets/images/cosaic_icon.png" alt="cosaic" class = "cosaic">
     <div class="whole-group" >
     <!-- Main Form -->
     <div class="login-form-1">  
