@@ -7,7 +7,6 @@ if (!isset($_SESSION['username'])) {
 }
 
 require_once ('includes/server.php')
-
 ?>
 
 <html>
@@ -16,6 +15,7 @@ require_once ('includes/server.php')
     <title>Cosaic</title>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="icon" href="./assets/images/cosaic_favicon.png">
     <link rel="stylesheet" type="text/css" href="./assets/css/styles.css" > 
     <link rel="stylesheet" type="text/css" href="./assets/css/profile.css" > 
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/css/bootstrap.min.css">
@@ -28,25 +28,47 @@ require_once ('includes/server.php')
 
 <nav class="navbar navbar-default" role="navigation">
         <div class="navbar-header">
-            <a class="navbar-brand" href="#">Cosaic</a>
+            <img href="index.php" src='./assets/images/cosaic_navbar_logo.png' alt='like' height="40em">
         </div>
         <div class="collapse navbar-collapse">
             <ul class="nav navbar-nav">
+				
+                <!-- HOME BUTTON -->
                 <li>
                     <a href="index.php" class="current">Home</a>
                 </li>
-
-                <div class="form-popup" id="myForm">
+                
+                <!-- POST BUTTON -->
+                <li>
+				  <a onclick="openCreatePostForm()" id = 'create-post' class="current">Post</a>
+                </li>
+                
+                <!-- CREATE POST POPUP -->
+			   <div class="form-popup" id="create-post-form">
                     <form class="form-container" method="post" enctype="multipart/form-data">
+						
+						<label>Image</label>
+                        <input type="file" name="post-image" id="post-image" accept="image/*"/>  
+						
+                        <label>Caption</label>
+                        <input type="text" name ="post-caption" placeholder="Insert caption" autocomplete = "off">
+                         
+                        <input type="submit" name="create-post" id="create-post" value="Post" class="btn btn-info" /> 
+                        <button type="button" class="btn cancel" onclick="closeForms()">Close</button>
+                    </form>
+                </div>
+			    <!-- EDIT PROFILE POPUP -->
+                <div class="form-popup" id="edit-profile-form">
+                    <form class="form-container" method="post" enctype="multipart/form-data">
+						
                         <label>Description</label>
                         <input type="text" name ="user_infor" placeholder="Enter your new description" autocomplete = "off">
+                        
                         <label>Profile picture</label>
                         <input type="file" name="image" id="chooseFile"  />   
 
-                        <input type="submit" name="insert" id="insert" value="Insert" class="btn btn-info" /> 
-                        <button type="button" class="btn cancel" onclick="closeForm()">Close</button>
-
-
+                        <input type="submit" name="insert" id="insert" value="Update" class="btn btn-info" /> 
+                        <button type="button" class="btn cancel" onclick="closeForms()">Close</button>
                     </form>
                 </div>
                             
@@ -54,7 +76,10 @@ require_once ('includes/server.php')
 
             <ul class="nav navbar-nav navbar-right">
                 <li>
-                    <a href="logout.php">Logout</a>
+                  <a onclick="openEditProfileForm()" id = 'edit_profile_link'>Edit Profile</a>
+                </li>
+                <li>
+                  <a href="logout.php">Logout</a>
                 </li>
             </ul>
             <form class="navbar-form navbar-left" role="search" action = "search.php" method = "GET" name = "search_form">
@@ -63,14 +88,14 @@ require_once ('includes/server.php')
                     <button type="submit" class="btn btn-default">Submit</button>
                         <div class = "results-wrapper">
                             <div class="search_results"></div>
-                            <div class="search_results_footer_empty"></div>
-                        </div>
+						<div class="search_results_footer_empty"></div>
+					</div>
                 </div>
             </form>
         </div>
     </nav>
         
-    <!-- DISPLAY PROFILE INFOR  -->  
+    <!-- DISPLAY PROFILE INFORMATION  -->  
     <div class="jumbotron">
         <div class="container" >
             <img id ="profile_img">
@@ -80,37 +105,72 @@ require_once ('includes/server.php')
                     } 
                 ?>
                 
-
             </img>
             <div id ="user_infor">
-                <p id ="profile_content" >WELCOME TO <?php echo $_SESSION['username']; ?>'s page </p>
-                <p id ="profile_content" > A little about me: <?php echo $_SESSION['description']; ?> </p>
+              <p id ="profile-username" ><?php echo $_SESSION['username']; ?></p>
+      
+              <?php 
+                $first_name = $_SESSION['first_name']; 
+                $last_name = $_SESSION['last_name']; 
+                echo "<p id='profile-name'>$first_name $last_name</p>";
+              ?>
+      
+              <p id ="profile-description" ><?php echo $_SESSION['description']; ?> </p>
             </div>
-            <a onclick="openForm()" id = 'edit_profile_link' style="display: block;width: 250px;text-align: center;margin-top: 10;">Edit Profile</a>
         </div>
 
     </div>
     
-    <!-- POSTS OF USERS -->
-    <div class="container">
-    <div class="row">
-      <div class="col-md-4">
-        <h2>Heading</h2>
-        <p>Donec id elit non  </p>
-        <p><a class="btn btn-secondary" href="#" role="button">View details &raquo;</a></p>
-      </div>
-      <div class="col-md-4">
-        <h2>Heading</h2>
-        <p>Donec id elit non mius. Etiam porta sem malesuada magna mollis euismod. Donec sed odio dui. </p>
-        <p><a class="btn btn-secondary" href="#" role="button">View details &raquo;</a></p>
-      </div>
-      <div class="col-md-4">
-        <h2>Heading</h2>
-        <p>Donec sed odio dui. Cras justo odio, dapibus ac facilisis in, egestas eget quam. Vestibulo sit amet risus.</p>
-        <p><a class="btn btn-secondary" href="#" role="button">View details &raquo;</a></p>
-      </div>
-    </div>
+    <?php
+      //----------------------------------------------------------------------
+      // DISPLAY POSTS
+      //----------------------------------------------------------------------
+      $current_user = $_SESSION["username"]; 
+      $result = $db -> query("SELECT id 
+                              FROM `create` 
+                              WHERE username = '$current_user'
+                              ORDER BY id DESC"); 
 
+      $current_user_posts = array(); 
+
+      while($row = $result -> fetch_assoc()) {
+        array_push($current_user_posts, $row["id"]);  
+      }
+      
+      echo "<div class='container'>
+              <div class='row' style='width: 60em'>"; 
+      
+      foreach ($current_user_posts as $post_id) {
+        
+        $result = $db -> query("SELECT likes, timestamp, caption, post_image 
+                                FROM posts
+                                WHERE id = $post_id"); 
+        
+        $row = $result -> fetch_assoc(); 
+          
+        $likes = $row["likes"]; 
+        $timestamp = date("M j, g:i A", strtotime($row["timestamp"])); 
+        $caption = $row["caption"]; 
+        $post_image = $row["post_image"]; 
+
+        echo "<div class='col-md-4 post'>
+        
+                <img class='post-image' 
+                  src='data:image/jpg;base64,".base64_encode($post_image)."'height='250px' width='250px'/>
+                  
+                <p class='caption'>$caption</p>
+                
+                <p class='likes'>$likes 
+                  <img src='./assets/images/like_icon.png' alt='like' width='15em'>
+                likes</p>
+                
+                <p class='timestamp'>$timestamp</p>
+              </div>";  
+      }
+      
+      echo "  </div>
+            </div>"; 
+    ?>
   </body>
 </html>
 

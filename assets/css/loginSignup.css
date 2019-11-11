@@ -269,11 +269,11 @@ label:hover:before {
 .whole-group{
   margin: 30% 30% 25% 25%;
 }
-.cosaic{
+.cosaic {
   float: left;
   margin: 30% 5% 5% 22%;
-  max-height: 400px;
-  max-width: 400px;
-  width: 300px;
-  height: 300px;
+  max-height: 300px;
+  max-width: 300px;
+  width: 200px;
+  height: 200px;
 }
