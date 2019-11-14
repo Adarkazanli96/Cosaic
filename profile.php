@@ -71,7 +71,11 @@ require_once ('includes/server.php')
             </form>
         </div>
     </nav>
-        
+
+<?php if($user_array['username'] === null){?>
+   <p style = 'text-align: center'> User does not exist</p>
+<?php }else {?>
+
 
     <!-- DISPLAY PROFILE INFOR  -->  
     <div class="jumbotron">
@@ -97,3 +101,5 @@ require_once ('includes/server.php')
 
   </body>
 </html>
+
+<?php } ?>

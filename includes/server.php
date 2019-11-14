@@ -48,8 +48,14 @@ $create_table = "CREATE TABLE IF NOT EXISTS `create` (
   `id` INT(8)
 )"; 
 
+$tagged_in = "CREATE TABLE IF NOT EXISTS `tagged_in` (
+  `username` VARCHAR(100), 
+  `id` INT(8),
+  PRIMARY KEY (id, username)
+)"; 
+
 // Creates the users, posts, and create tables in the database. 
-$queries = array($users_table, $posts_table, $create_table); 
+$queries = array($users_table, $posts_table, $create_table, $tagged_in); 
 
 foreach ($queries as $query) {
   $db -> query($query);
@@ -210,7 +216,8 @@ if (isset($_POST["create-post"])) {
 		
 	  // Retrieves the image file and caption. 
 	  $file = addslashes(file_get_contents($_FILES["post-image"]["tmp_name"]));
-	  $caption = $_POST["post-caption"]; 
+    $caption = $_POST["post-caption"]; 
+    $tagged_users = get_tagged_users($caption);
 		
 	  // INSERT INTO POSTS TABLE
 	  $query = "INSERT INTO posts(timestamp, caption, post_image) 
@@ -228,6 +235,27 @@ if (isset($_POST["create-post"])) {
       // INSERT INTO CREATE TABLE
       $db -> query("INSERT INTO `create` (`username`, `id`) VALUES ('$username', '$post_id')"); 
       // echo "Username: $username<br> ID: $post_id <br>"; 
+
+      // INSERT INTO TAGGED_IN TABLE
+      foreach($tagged_users as $tagged_user){
+        $db -> query("INSERT INTO `tagged_in` (`username`, `id`) VALUES ('$tagged_user', '$post_id')"); 
+      }
 	}
 }
+
+// get an array of tagged users
+function get_tagged_users($caption){
+  $usernames = [];
+  $words = explode(" ", $caption);
+  
+  for($i = 0; $i<sizeof($words); $i++){
+    if($words[$i][0] === '@'){ // if the first letter starts with '@'
+      array_push($usernames, substr($words[$i],1)); // push to usernames without '@'
+      continue;
+    }
+  }
+
+  return $usernames;
+}
+
 ?>

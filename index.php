@@ -151,6 +151,7 @@ require_once ('includes/server.php')
         $likes = $row["likes"]; 
         $timestamp = date("M j, g:i A", strtotime($row["timestamp"])); 
         $caption = $row["caption"]; 
+        $caption = show_tags($caption);
         $post_image = $row["post_image"]; 
 
         echo "<div class='col-md-4 post'>
@@ -173,4 +174,20 @@ require_once ('includes/server.php')
     ?>
   </body>
 </html>
+
+<?php function show_tags($str){
+  $result = "";
+  $words = explode(" ", $str);
+  // add <a></a> around tags
+  for($i = 0; $i<sizeof($words); $i++){
+    $username = $words[$i];
+    if($username[0] === '@'){ // if the first letter starts with '@'
+      $username = substr($username,1);
+      $result = $result . " <a href='profile.php?profile_username=$username'>" . $words[$i] . '</a>';
+      continue;
+    }
+    $result = $result . ' ' . $words[$i];
+  }
+  return $result;
+}?>
 

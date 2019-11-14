@@ -81,6 +81,7 @@ body {font-family: 'Varela Round';}
 /* IMAGE POSTS */
 .post {
   margin-bottom: 2.5em;
+  max-width: 400px;
 }
 
 .post .post-image {
@@ -97,4 +98,10 @@ body {font-family: 'Varela Round';}
   font-size: 0.8em; 
   line-height: 0.1em; 
   color: rgb(142, 142, 142);
+}
+
+.post .caption {
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
 }
