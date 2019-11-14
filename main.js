@@ -44,6 +44,7 @@ function openCreatePostForm() {
 
 // Closes the edit profile and create post popups. 
 function closeForms() {
+    document.getElementById("edit-profile-form").style.display = "none";
     document.getElementById("save-NewCaption").style.display = "none";
     document.getElementById("create-post-form").style.display = "none";
 }
