@@ -122,7 +122,15 @@ require_once ('includes/server.php')
                 echo "<p id='profile-name'>$first_name $last_name</p>";
               ?>
       
-              <p id ="profile-description" ><?php echo $_SESSION['description']; ?> </p>
+            <p id ="profile-description" >
+                <?php 
+                if(isset($_SESSION['description'])){
+                    echo $_SESSION['description']; 
+                }
+                
+                ?>
+            </p>
+
             </div>
         </div>
 
@@ -131,20 +139,33 @@ require_once ('includes/server.php')
 
     
     <?php
-      //----------------------------------------------------------------------
-      // DISPLAY POSTS
-      //----------------------------------------------------------------------
     
-        if (isset($_POST["update-post-caption"]) && !empty($_POST['update-post-caption'] )) {
+    //UPDATE CAPTION
+    if (isset($_POST["update-post-caption"]) && !empty($_POST['update-post-caption'] )) {
 
-          $temp = $_POST["test"];
-          $new_caption = mysqli_real_escape_string($db, $_POST['update-post']);
-          $query1 = "UPDATE posts 
-                    SET caption = '$new_caption'
-                    WHERE  id = '$temp'";
-          $result = mysqli_query($db, $query1);
-          
-        }
+      $temp = $_POST["test"];
+      $new_caption = mysqli_real_escape_string($db, $_POST['update-post']);
+      $query1 = "UPDATE posts 
+                SET caption = '$new_caption'
+                WHERE  id = '$temp'";
+      $result = mysqli_query($db, $query1);
+      
+    }
+    //DELETE CAPTION
+    if (isset($_POST["delete_post"]) && !empty($_POST['delete_post'])){
+      $temp = $_POST["test"];
+      $query1 = "DELETE FROM `create`
+                 WHERE `id` = '$temp'";
+      $result = mysqli_query($db, $query1);
+      $query2 = "DELETE FROM `posts`
+                 WHERE `id` = '$temp'";
+      $result2 = mysqli_query($db, $query2);
+      
+    }
+
+//----------------------------------------------------------------------
+// DISPLAY POSTS
+//----------------------------------------------------------------------
       $current_user = $_SESSION["username"]; 
       $result = $db -> query("SELECT id 
                               FROM `create` 
@@ -190,7 +211,6 @@ require_once ('includes/server.php')
                 
   
                 <button class='fa fa-edit post-button' id = '$post_id'> Edit </button>
-                $post_id;
                 </div>";  
         }
       echo "  </div>

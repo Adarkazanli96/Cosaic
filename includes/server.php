@@ -99,6 +99,8 @@ if(isset($_POST['signup']) && $_SERVER['REQUEST_METHOD'] == "POST"){
           VALUES('$username', '$first_name', '$last_name', '$password')";
     mysqli_query($db, $query);
     $_SESSION['username'] = $username;
+    $_SESSION['first_name'] =  $first_name; 
+    $_SESSION['last_name'] = $last_name;
     signUp_profilePicture();
     header('location: index.php');
   }
@@ -132,14 +134,11 @@ if(isset($_POST['login']) && $_SERVER['REQUEST_METHOD'] == "POST"){
       $password = md5($password);
       $query = "SELECT * FROM users WHERE username='$username' AND password='$password'";
       $results = mysqli_query($db, $query);
-      $user_info = $results -> fetch_assoc();
 
       if (mysqli_num_rows($results) == 1) {
         $_SESSION['username'] = $username;
         $_SESSION['description'] = $row[0];
         
-        $_SESSION['first_name'] =  $user_info["first_name"]; 
-        $_SESSION['last_name'] = $user_info["last_name"]; 
         
         if($row2[0] === null) { // if no profile pic in database
           $profile_img = '<img src="assets/images/default_profile.jpeg" height="250" width="250" />';
