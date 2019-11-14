@@ -1,7 +1,7 @@
 <?php
 
-session_start();
 require_once("config.php");
+session_start();
 
 // Login to to the database
 $db = mysqli_connect($servername, $username, $password, $dbname);
@@ -138,8 +138,8 @@ if(isset($_POST['login']) && $_SERVER['REQUEST_METHOD'] == "POST"){
         $_SESSION['username'] = $username;
         $_SESSION['description'] = $row[0];
         
-        $_SESSION["first_name"] =  $user_info["first_name"]; 
-        $_SESSION["last_name"] = $user_info["last_name"]; 
+        $_SESSION['first_name'] =  $user_info["first_name"]; 
+        $_SESSION['last_name'] = $user_info["last_name"]; 
         
         if($row2[0] === null) { // if no profile pic in database
           $profile_img = '<img src="assets/images/default_profile.jpeg" height="250" width="250" />';
@@ -188,6 +188,7 @@ if(isset($_POST['insert'])) {
               SET description = '$description' 
               WHERE username = '".$_SESSION['username']."' ";
     $result = mysqli_query($db, $query);
+
     $query2 = "SELECT description FROM users WHERE username = '".$_SESSION['username']."' ";
     $result2 = mysqli_query($db, $query2);
     $row = mysqli_fetch_row($result2);
@@ -230,4 +231,5 @@ if (isset($_POST["create-post"])) {
       // echo "Username: $username<br> ID: $post_id <br>"; 
 	}
 }
+
 ?>

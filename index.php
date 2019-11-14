@@ -17,8 +17,15 @@ require_once ('includes/server.php')
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="icon" href="./assets/images/cosaic_favicon.png">
     <link rel="stylesheet" type="text/css" href="./assets/css/styles.css" > 
-    <link rel="stylesheet" type="text/css" href="./assets/css/profile.css" > 
+    <link rel="stylesheet" type="text/css" href="./assets/css/profile.css"> 
+    <link rel="stylesheet" type="text/css" href="./assets/css/edit_post.css" >
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/css/bootstrap.min.css">
+
+    <link rel="stylesheet" href="https://unpkg.com/purecss@1.0.1/build/pure-min.css" integrity="sha384-oAOxQR6DkCoMliIh8yFnu25d7Eq/PHS21PClpwjOTeU2jRSq11vu66rf90/cZr47" crossorigin="anonymous">
+
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/js/bootstrap.min.js"></script>
     <script src="main.js" type="text/javascript">></script>
@@ -40,9 +47,9 @@ require_once ('includes/server.php')
                 
                 <!-- POST BUTTON -->
                 <li>
-				  <a onclick="openCreatePostForm()" id = 'create-post' class="current">Post</a>
+				            <a onclick="openCreatePostForm()" id = 'create-post' class="current">Post</a>
                 </li>
-                
+
                 <!-- CREATE POST POPUP -->
 			   <div class="form-popup" id="create-post-form">
                     <form class="form-container" method="post" enctype="multipart/form-data">
@@ -58,7 +65,7 @@ require_once ('includes/server.php')
                     </form>
                 </div>
 			    <!-- EDIT PROFILE POPUP -->
-                <div class="form-popup" id="edit-profile-form">
+                <div class="form-popup-profile" id="edit-profile-form">
                     <form class="form-container" method="post" enctype="multipart/form-data">
 						
                         <label>Description</label>
@@ -120,11 +127,24 @@ require_once ('includes/server.php')
         </div>
 
     </div>
+
+
     
     <?php
       //----------------------------------------------------------------------
       // DISPLAY POSTS
       //----------------------------------------------------------------------
+    
+        if (isset($_POST["update-post-caption"]) && !empty($_POST['update-post-caption'] )) {
+
+          $temp = $_POST["test"];
+          $new_caption = mysqli_real_escape_string($db, $_POST['update-post']);
+          $query1 = "UPDATE posts 
+                    SET caption = '$new_caption'
+                    WHERE  id = '$temp'";
+          $result = mysqli_query($db, $query1);
+          
+        }
       $current_user = $_SESSION["username"]; 
       $result = $db -> query("SELECT id 
                               FROM `create` 
@@ -139,8 +159,11 @@ require_once ('includes/server.php')
       
       echo "<div class='container'>
               <div class='row' style='width: 60em'>"; 
-      
+ 
+
+
       foreach ($current_user_posts as $post_id) {
+
         
         $result = $db -> query("SELECT likes, timestamp, caption, post_image 
                                 FROM posts
@@ -151,8 +174,7 @@ require_once ('includes/server.php')
         $likes = $row["likes"]; 
         $timestamp = date("M j, g:i A", strtotime($row["timestamp"])); 
         $caption = $row["caption"]; 
-        $post_image = $row["post_image"]; 
-
+        $post_image = $row["post_image"];
         echo "<div class='col-md-4 post'>
         
                 <img class='post-image' 
@@ -165,12 +187,31 @@ require_once ('includes/server.php')
                 likes</p>
                 
                 <p class='timestamp'>$timestamp</p>
-              </div>";  
-      }
-      
+                
+  
+                <button class='fa fa-edit post-button' id = '$post_id'> Edit </button>
+                $post_id;
+                </div>";  
+        }
       echo "  </div>
             </div>"; 
+
+       
     ?>
+ <!-- POP UP FORM TO MODIFY/DELETE POST  -->  
+<div class="form-popup-modify-post" id="save-NewCaption">
+    <form id="update-form" class="form-container" method="post" enctype="multipart/form-data">
+
+        <label>Update New Caption</label>
+        <input type="text" id="caption" name ="update-post" placeholder="Enter your new caption" autocomplete = "off">
+        <input type="submit" name="update-post-caption" id = 'insert-update' value="Update" class="btn btn-info" />
+        <input type="hidden" value="" id="hidden-input" name="test"/>
+        <input type="submit" name="delete_post" id="insert" value="Delete_Post" class="btn btn-info" />
+        <button type="button" class="btn cancel" onclick="closeForms()">Close</button>
+    </form>
+</div>
+
+
   </body>
 </html>
 

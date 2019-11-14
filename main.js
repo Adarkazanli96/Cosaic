@@ -48,6 +48,32 @@ function closeForms() {
     document.getElementById("create-post-form").style.display = "none";
 }
 
+
+
+//Open modifyCaptionForm
+/**
+function modifyCaptionForm() {
+    document.getElementById("save-NewCaption").style.display = "block";
+}
+*/
+// Closes modifyCaptionForm
+function closeCaptionForm() {
+    document.getElementById("closeCaptionForms").style.display = "none";
+}
+
+
+$(document).ready(function(){
+    $('.post-button').each(function(){
+        var id = $(this).attr('id')
+        $(this).click(function(index){
+            document.getElementById("save-NewCaption").style.display = "block";
+            $('#hidden-input').val(id)
+        })
+    });
+
+})
+
+
 // check if input file is valid
 $(document).ready(function(){  
     $('#insert').click(function(){  
@@ -65,5 +91,6 @@ $(document).ready(function(){
                return false;  
             }  
          }  
+
     });  
 });  
