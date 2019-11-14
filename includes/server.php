@@ -123,7 +123,7 @@ if(isset($_POST['login']) && $_SERVER['REQUEST_METHOD'] == "POST"){
 
     if (count($errors) == 0) {
 
-      $sql = "SELECT description, profile_img FROM users WHERE username='$username'";
+      $sql = "SELECT description FROM users WHERE username='$username'";
       $result = mysqli_query($db, $sql);
       $row = mysqli_fetch_row($result);
 
@@ -135,9 +135,16 @@ if(isset($_POST['login']) && $_SERVER['REQUEST_METHOD'] == "POST"){
       $query = "SELECT * FROM users WHERE username='$username' AND password='$password'";
       $results = mysqli_query($db, $query);
 
+      $query3 = "SELECT first_name, last_name FROM users WHERE username='$username'";
+      $result3 = mysqli_query($db, $query3);
+      $row3 = mysqli_fetch_row($result3);
+
       if (mysqli_num_rows($results) == 1) {
         $_SESSION['username'] = $username;
         $_SESSION['description'] = $row[0];
+
+        $_SESSION['first_name'] =  $row3[0]; 
+        $_SESSION['last_name'] = $row3[1];
         
         
         if($row2[0] === null) { // if no profile pic in database
