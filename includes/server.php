@@ -129,6 +129,8 @@ if(isset($_POST['signup']) && $_SERVER['REQUEST_METHOD'] == "POST"){
           VALUES('$username', '$first_name', '$last_name', '$password')";
     mysqli_query($db, $query);
     $_SESSION['username'] = $username;
+    $_SESSION["first_name"] =  $first_name; 
+    $_SESSION["last_name"] = $last_name; 
     signUp_profilePicture();
     header('location: index.php');
   }
