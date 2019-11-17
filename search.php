@@ -16,6 +16,7 @@ else{
     <title>Cosaic</title>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="icon" href="./assets/images/cosaic_favicon.png">
     <link rel="stylesheet" type="text/css" href="./assets/css/styles.css">
     <link rel="stylesheet" type="text/css" href="./assets/css/profile.css">
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/css/bootstrap.min.css">
@@ -28,7 +29,7 @@ else{
 
     <nav class="navbar navbar-default" role="navigation">
         <div class="navbar-header">
-            <a class="navbar-brand" href="#">Cosaic</a>
+            <img href="index.php" src='./assets/images/cosaic_navbar_logo.png' alt='like' height="40em">
         </div>
         <div class="collapse navbar-collapse">
             <ul class="nav navbar-nav">
@@ -65,7 +66,7 @@ else{
             <ul class="nav navbar-nav navbar-right">
                 <li>
                     <a href="logout.php">Logout</a>
-                </li>
+                </li>f
             </ul>
             <form class="navbar-form navbar-left" role="search" action="search.php" method="GET" name="search_form">
                 <div class="form-group">

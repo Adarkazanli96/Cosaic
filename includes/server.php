@@ -24,7 +24,7 @@ $errors = array();
 // CREATING TABLES
 //----------------------------------------------------------------------
 
-// The queries for the users, posts, and create tables. 
+// The queries for every table needed. 
 $users_table = "CREATE TABLE IF NOT EXISTS `users` (
   `username` varchar(100) PRIMARY KEY,
   `first_name` varchar(100) NOT NULL,
@@ -48,14 +48,38 @@ $create_table = "CREATE TABLE IF NOT EXISTS `create` (
   `id` INT(8)
 )"; 
 
-$tagged_in = "CREATE TABLE IF NOT EXISTS `tagged_in` (
+$tagged_in_table = "CREATE TABLE IF NOT EXISTS `tagged_in` (
   `username` VARCHAR(100), 
   `id` INT(8),
   PRIMARY KEY (id, username)
 )"; 
 
+$likes_table = "CREATE TABLE IF NOT EXISTS `likes` (
+  `id` INT(8) NOT NULL AUTO_INCREMENT,
+  `timestamp` DATETIME NOT NULL,
+  PRIMARY KEY (id)
+)";
+
+$post_has_likes_table = "CREATE TABLE IF NOT EXISTS `post_has_likes` (
+  `post_id` INT(8),
+  `like_id` INT(8),
+  PRIMARY KEY (post_id, like_id)
+)";
+
+$user_add_likes_table = "CREATE TABLE IF NOT EXISTS `user_add_likes` (
+  `username` VARCHAR(100),
+  `like_id` INT(8),
+  PRIMARY KEY (username, like_id)
+)";
+
 // Creates the users, posts, and create tables in the database. 
-$queries = array($users_table, $posts_table, $create_table, $tagged_in); 
+$queries = array($users_table, 
+                 $posts_table, 
+                 $create_table, 
+                 $tagged_in_table, 
+                 $likes_table, 
+                 $post_has_likes_table, 
+                 $user_add_likes_table); 
 
 foreach ($queries as $query) {
   $db -> query($query);
@@ -243,7 +267,9 @@ if (isset($_POST["create-post"])) {
 	}
 }
 
-// get an array of tagged users
+//----------------------------------------------------------------------
+// TAGS USERS
+//----------------------------------------------------------------------
 function get_tagged_users($caption){
   $usernames = [];
   $words = explode(" ", $caption);
@@ -258,4 +284,35 @@ function get_tagged_users($caption){
   return $usernames;
 }
 
+
+//----------------------------------------------------------------------
+// LIKE BUTTONS
+//----------------------------------------------------------------------
+$result = mysqli_query($db, "SELECT id FROM posts");   
+
+while ($row = mysqli_fetch_row($result)) {
+  
+  $post_id = $row[0]; 
+  
+  if (isset($_POST["like-button-$post_id"])) {
+      
+    // Add to likes
+    mysqli_query($db, "INSERT INTO likes (id, timestamp) 
+                       VALUES (NULL, NOW())"); 
+
+    // Retrieves the like id number. 
+    $result = mysqli_query($db, "SELECT id FROM likes ORDER BY id DESC LIMIT 1");      
+    $last_like = mysqli_fetch_row($result);
+    $like_id = $last_like[0]; 
+
+    // Add to user_add_likes
+    $current_user = $_SESSION["username"]; 
+    mysqli_query($db, "INSERT INTO user_add_likes (username, like_id) 
+                       VALUES ('$current_user', '$like_id')"); 
+
+    // Add to post_has_likes
+    mysqli_query($db, "INSERT INTO post_has_likes (post_id, like_id) 
+                       VALUES ('$post_id', '$like_id')"); 
+  } 
+}
 ?>
