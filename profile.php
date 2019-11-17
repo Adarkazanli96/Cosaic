@@ -33,6 +33,7 @@ require_once ('includes/server.php')
     <title>Cosaic</title>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="icon" href="./assets/images/cosaic_favicon.png">
     <link rel="stylesheet" type="text/css" href="./assets/css/styles.css" > 
     <link rel="stylesheet" type="text/css" href="./assets/css/profile.css" > 
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/css/bootstrap.min.css">
@@ -45,7 +46,7 @@ require_once ('includes/server.php')
 
 <nav class="navbar navbar-default" role="navigation">
         <div class="navbar-header">
-            <a class="navbar-brand" href="#">Cosaic</a>
+            <img href="index.php" src='./assets/images/cosaic_navbar_logo.png' alt='like' height="40em">
         </div>
         <div class="collapse navbar-collapse">
             <ul class="nav navbar-nav">
@@ -91,14 +92,13 @@ require_once ('includes/server.php')
 
             </img>
             <div id ="user_infor">
-                <p id ="profile_content" >WELCOME TO <?php echo $user_array['first_name'] . " " . $user_array['last_name']; ?>'s page </p>
-                <p id ="profile_content" > Bio: <?php echo $user_array['description']; ?> </p>
+              <p id ="profile-username" ><?php echo $user_array['username'];?></p>
+              <p id='profile-name'><?php echo $user_array['first_name'] . " " . $user_array['last_name'];?></p> 
+              <p id ="profile-description" ><?php echo $user_array['description']; ?></p>
             </div>
         </div>
-
-    </div>
-    
-
+    </div>  
+      
   </body>
 </html>
 

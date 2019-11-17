@@ -85,13 +85,14 @@ body {font-family: 'Varela Round';}
 }
 
 .post .post-image {
-  margin-bottom: 1em;
+  
 }
 
-.post .likes {
-  line-height: 10px; 
-  font-weight: bold; 
-  display: inline-block; 
+.post .like-button {
+  background: url("../images/like_icon.png") no-repeat;
+  background-size: contain; 
+  height: 1.5em; 
+  border-color:transparent;
 }
 
 .post .timestamp {
