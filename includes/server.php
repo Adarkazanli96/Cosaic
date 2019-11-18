@@ -129,13 +129,8 @@ if(isset($_POST['signup']) && $_SERVER['REQUEST_METHOD'] == "POST"){
           VALUES('$username', '$first_name', '$last_name', '$password')";
     mysqli_query($db, $query);
     $_SESSION['username'] = $username;
-<<<<<<< HEAD
-    $_SESSION['first_name'] =  $first_name; 
-    $_SESSION['last_name'] = $last_name;
-=======
     $_SESSION["first_name"] =  $first_name; 
     $_SESSION["last_name"] = $last_name; 
->>>>>>> dddc2706f9e89e279dea287ac5f760e639714b01
     signUp_profilePicture();
     header('location: index.php');
   }
@@ -279,8 +274,6 @@ if (isset($_POST["create-post"])) {
 	}
 }
 
-<<<<<<< HEAD
-=======
 //----------------------------------------------------------------------
 // TAGS USERS
 //----------------------------------------------------------------------
@@ -329,5 +322,4 @@ while ($row = mysqli_fetch_row($result)) {
                        VALUES ('$post_id', '$like_id')"); 
   } 
 }
->>>>>>> dddc2706f9e89e279dea287ac5f760e639714b01
 ?>

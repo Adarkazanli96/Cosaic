@@ -84,9 +84,6 @@ require_once ('includes/server.php')
 
             <ul class="nav navbar-nav navbar-right">
                 <li>
-                  <a onclick="openEditProfileForm()" id = 'edit_profile_link'>Edit Profile</a>
-                </li>
-                <li>
                   <a href="logout.php">Logout</a>
                 </li>
             </ul>
@@ -135,6 +132,8 @@ require_once ('includes/server.php')
             </p>
 
             </div>
+
+            <a onclick="openEditProfileForm()" id = 'edit_profile_link' style="display: block;width: 250px;text-align: center;margin-top: 10;">Edit Profile</a>
         </div>
 
     </div>
@@ -183,14 +182,8 @@ require_once ('includes/server.php')
       
       echo "<div class='container'>
               <div class='row' style='width: 60em'>"; 
-<<<<<<< HEAD
- 
-
-
-=======
       
       // Iterates through every post the user has posted. 
->>>>>>> dddc2706f9e89e279dea287ac5f760e639714b01
       foreach ($current_user_posts as $post_id) {
 
         
@@ -203,9 +196,6 @@ require_once ('includes/server.php')
         // $likes = $row["likes"]; 
         $timestamp = date("M j, g:i A", strtotime($row["timestamp"])); 
         $caption = $row["caption"]; 
-<<<<<<< HEAD
-        $post_image = $row["post_image"];
-=======
         $caption = show_tags($caption);
         $post_image = $row["post_image"]; 
         
@@ -241,7 +231,6 @@ require_once ('includes/server.php')
         $fetch_likes = mysqli_query($db, "SELECT COUNT(*) FROM `post_has_likes` WHERE post_id = $post_id"); 
         $like_count = mysqli_fetch_row($fetch_likes)[0]; 
 
->>>>>>> dddc2706f9e89e279dea287ac5f760e639714b01
         echo "<div class='col-md-4 post'>
         
                 <img class='post-image' 
@@ -296,4 +285,3 @@ require_once ('includes/server.php')
   }
   return $result;
 }?>
-

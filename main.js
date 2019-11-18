@@ -46,6 +46,7 @@ function openCreatePostForm() {
 function closeForms() {
     document.getElementById("save-NewCaption").style.display = "none";
     document.getElementById("create-post-form").style.display = "none";
+    document.getElementById("edit-profile-form").style.display = "none";
 }
 
 

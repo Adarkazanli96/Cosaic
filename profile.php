@@ -15,18 +15,6 @@ if(isset($_GET['profile_username'])){
 }
 ?>
 
-<?php
-session_start();
-
-// redirect to signup if user is not signed up
-if (!isset($_SESSION['username'])) {
-    header('location: signup.php');
-}
-
-require_once ('includes/server.php')
-
-?>
-
 <html>
 
 <head>
