@@ -64,6 +64,7 @@ require_once ('includes/server.php')
                         <button type="button" class="btn cancel" onclick="closeForms()">Close</button>
                     </form>
                 </div>
+      
 			    <!-- EDIT PROFILE POPUP -->
                 <div class="form-popup-profile" id="edit-profile-form">
                     <form class="form-container" method="post" enctype="multipart/form-data">
@@ -89,6 +90,8 @@ require_once ('includes/server.php')
                   <a href="logout.php">Logout</a>
                 </li>
             </ul>
+      
+            <!-- SEACH FORM -->
             <form class="navbar-form navbar-left" role="search" action = "search.php" method = "GET" name = "search_form">
                 <div class="form-group">
                     <input type="text" class="form-control" placeholder="Search" onkeyup="getLiveSearchUsers(this.value)" name = "q" autocomplete = "off" id="search_text_input"/>
@@ -180,22 +183,65 @@ require_once ('includes/server.php')
       
       echo "<div class='container'>
               <div class='row' style='width: 60em'>"; 
+<<<<<<< HEAD
  
 
 
+=======
+      
+      // Iterates through every post the user has posted. 
+>>>>>>> dddc2706f9e89e279dea287ac5f760e639714b01
       foreach ($current_user_posts as $post_id) {
 
         
-        $result = $db -> query("SELECT likes, timestamp, caption, post_image 
-                                FROM posts
-                                WHERE id = $post_id"); 
+        // Retrieves the information of the post. 
+        $result = $db -> query("SELECT * FROM posts WHERE id = $post_id"); 
         
         $row = $result -> fetch_assoc(); 
-          
-        $likes = $row["likes"]; 
+        
+        $post_id = $row["id"]; 
+        // $likes = $row["likes"]; 
         $timestamp = date("M j, g:i A", strtotime($row["timestamp"])); 
         $caption = $row["caption"]; 
+<<<<<<< HEAD
         $post_image = $row["post_image"];
+=======
+        $caption = show_tags($caption);
+        $post_image = $row["post_image"]; 
+        
+        // Checks if the post has already been liked by the user. 
+        $result = mysqli_query($db, "SELECT like_id
+                                     FROM `user_add_likes` 
+                                     WHERE username = '$current_user'"); 
+
+        $liked = false; 
+
+        while ($row = mysqli_fetch_assoc($result)) {
+
+          $like_id = $row["like_id"];
+
+          $has_like = mysqli_query($db, "SELECT COUNT(*)
+                                         FROM `post_has_likes` 
+                                         WHERE post_id = '$post_id' AND like_id = $like_id"); 
+          if (mysqli_fetch_row($has_like)[0]) {
+            $liked = true;
+          }
+        }
+
+        // Disables the like button if the post has already been liked 
+        // by the current user. 
+        if ($liked) {
+          $disabled = "disabled='disabled'";
+        }
+        else {
+          $disabled = ""; ;
+        }
+        
+        // Retrieves the number of likes the post has. 
+        $fetch_likes = mysqli_query($db, "SELECT COUNT(*) FROM `post_has_likes` WHERE post_id = $post_id"); 
+        $like_count = mysqli_fetch_row($fetch_likes)[0]; 
+
+>>>>>>> dddc2706f9e89e279dea287ac5f760e639714b01
         echo "<div class='col-md-4 post'>
         
                 <img class='post-image' 
@@ -203,9 +249,9 @@ require_once ('includes/server.php')
                   
                 <p class='caption'>$caption</p>
                 
-                <p class='likes'>$likes 
-                  <img src='./assets/images/like_icon.png' alt='like' width='15em'>
-                likes</p>
+                <form method='POST' style='margin-bottom: 0.5em;'>
+                  $like_count <input type='submit' value='    likes' class='like-button' name='like-button-$post_id' $disabled/>
+                </form>
                 
                 <p class='timestamp'>$timestamp</p>
                 
@@ -234,4 +280,20 @@ require_once ('includes/server.php')
 
   </body>
 </html>
+
+<?php function show_tags($str){
+  $result = "";
+  $words = explode(" ", $str);
+  // add <a></a> around tags
+  for($i = 0; $i<sizeof($words); $i++){
+    $username = $words[$i];
+    if($username[0] === '@'){ // if the first letter starts with '@'
+      $username = substr($username,1);
+      $result = $result . " <a href='profile.php?profile_username=$username'>" . $words[$i] . '</a>';
+      continue;
+    }
+    $result = $result . ' ' . $words[$i];
+  }
+  return $result;
+}?>
 
