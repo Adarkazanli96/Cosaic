@@ -18,7 +18,7 @@ require_once ('includes/server.php')
     <link rel="icon" href="./assets/images/cosaic_favicon.png">
     <link rel="stylesheet" type="text/css" href="./assets/css/styles.css" > 
     <link rel="stylesheet" type="text/css" href="./assets/css/profile.css"> 
-    <link rel="stylesheet" type="text/css" href="./assets/css/edit_post.css" >
+    <link rel="stylesheet" type="text/css" href="./assets/css/modal.css" >
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/css/bootstrap.min.css">
 
     <link rel="stylesheet" href="https://unpkg.com/purecss@1.0.1/build/pure-min.css" integrity="sha384-oAOxQR6DkCoMliIh8yFnu25d7Eq/PHS21PClpwjOTeU2jRSq11vu66rf90/cZr47" crossorigin="anonymous">
@@ -230,11 +230,12 @@ require_once ('includes/server.php')
         // Retrieves the number of likes the post has. 
         $fetch_likes = mysqli_query($db, "SELECT COUNT(*) FROM `post_has_likes` WHERE post_id = $post_id"); 
         $like_count = mysqli_fetch_row($fetch_likes)[0]; 
-
+        
         echo "<div class='col-md-4 post'>
         
-                <img class='post-image' 
-                  src='data:image/jpg;base64,".base64_encode($post_image)."'height='250px' width='250px'/>
+                <img class='post-image'";
+                echo 'onclick="showModal(`' . base64_encode($post_image) . '`, `' . $caption . '`)"'; // echo the onclick event with double quotes
+                echo "src='data:image/jpg;base64,".base64_encode($post_image)."'height='250px' width='250px'/>
                   
                 <p class='caption'>$caption</p>
                 
@@ -277,10 +278,13 @@ require_once ('includes/server.php')
     <div style = "text-align:center !important; float: left; width: 60%; height: 100%">
       <img class="img-responsive" id="img01" style="margin: auto; max-width: 100%; max-height: 100%;"/>
     </div>
-    <div style="width: 40%; height: 100%;background-color: white; float: left;">
-      <form action="/action_page.php">
-        Comment: <input type="text" name="new-comment"><br>
-        <input type="submit" value="Submit">
+    <div style="width: 40%; height: 100%;background-color: white; float: left;position: relative;">
+      <span id='modal-caption' style="padding-top: 15px; padding-left: 15px"></span>
+      <hr/>
+      <form action="/action_page.php" style = "position: absolute; 
+                bottom: 0px;left: 0px; right: 0px;">
+        <input type="text" style = "width:80%; height: 100%; float: left" placeholder="Add a comment...">
+        <button style = 'width: 20%; float: left;'>Post</button>
       </form>
     <div>
   </div>
@@ -306,25 +310,27 @@ require_once ('includes/server.php')
   return $result;
 }?>
 
-
 <script>
-var modal = document.getElementById("post-modal");
-var modalImg = document.getElementById("img01");
+function showModal(image, caption){
+    var modal = document.getElementById('post-modal');
+    var modalImg = document.getElementById('img01');
+    var modalCaption = document.getElementById('modal-caption')
 
-var elements = document.getElementsByClassName("post-image");
+    var elements = document.getElementsByClassName('post-image');
 
-var displayModalWithPic = function(element) {
-  modal.style.display = "block";
-  modalImg.src = element.target.currentSrc;
-};
+    modal.style.display = 'block';
+    console.log('getting the image: ', image, 'getting the caption', caption)
 
-for (var i = 0; i < elements.length; i++) {
-    var element = elements[i]
-    element.addEventListener('click', (element) => {displayModalWithPic(element)}, false);
-}
+    modalImg.src = `data:image/jpg;base64, ${image}`;
+    modalCaption.innerHTML = caption
 
-//user clicks on (x), close the modal
-document.getElementsByClassName("close")[0].onclick = function() {
-  modal.style.display = "none";
+    //user clicks on (x), close the modal
+    document.getElementsByClassName('close')[0].onclick = function() {
+      modalImg.src = ''
+      modalCaption.innerHTML = ''
+      modal.style.display = 'none';
+    }
+
+    //'showModal('" . $image . "','" . $caption . "')'
 }
 </script>
