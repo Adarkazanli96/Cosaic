@@ -35,7 +35,7 @@ require_once ('includes/server.php')
 
 <nav class="navbar navbar-default" role="navigation">
         <div class="navbar-header">
-            <img href="index.php" src='./assets/images/cosaic_navbar_logo.png' alt='like' height="40em">
+            <img href="index.php" src='./assets/images/cosaic_navbar_logo.png' alt='cosaic-logo' height="40em">
         </div>
         <div class="collapse navbar-collapse">
             <ul class="nav navbar-nav">
@@ -222,9 +222,11 @@ require_once ('includes/server.php')
         // by the current user. 
         if ($liked) {
           $disabled = "disabled='disabled'";
+          $like_button_class = "like-button-disabled"; 
         }
         else {
-          $disabled = ""; ;
+          $disabled = ""; 
+          $like_button_class = "like-button"; 
         }
         
         // Retrieves the number of likes the post has. 
@@ -238,14 +240,16 @@ require_once ('includes/server.php')
                   
                 <p class='caption'>$caption</p>
                 
-                <form method='POST' style='margin-bottom: 0.5em;'>
-                  $like_count <input type='submit' value='    likes' class='like-button' name='like-button-$post_id' $disabled/>
+                <form method='POST' style='margin-bottom: 0.5em; display: inline-block;'>
+                  $like_count <input type='submit' value='    likes' class='$like_button_class' name='like-button-$post_id' $disabled/>
                 </form>
+                
+                <button class='fa fa-edit post-button' id = '$post_id' style='float: right;'> Edit </button>
                 
                 <p class='timestamp'>$timestamp</p>
                 
   
-                <button class='fa fa-edit post-button' id = '$post_id'> Edit </button>
+                
                 </div>";  
         }
       echo "  </div>

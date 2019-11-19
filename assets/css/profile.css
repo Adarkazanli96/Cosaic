@@ -114,6 +114,13 @@ margin: 0;
   border-color:transparent;
 }
 
+.post .like-button-disabled {
+  background: url("../images/like_icon_disabled.png") no-repeat;
+  background-size: contain; 
+  height: 1.5em; 
+  border-color:transparent;
+}
+
 .post .timestamp {
   font-size: 0.8em; 
   line-height: 0.1em; 
@@ -125,3 +132,4 @@ margin: 0;
   white-space: nowrap;
   text-overflow: ellipsis;
 }
+

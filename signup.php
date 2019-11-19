@@ -25,11 +25,11 @@ require_once('includes/server.php'); // server.php handles loogic for logging in
 
   </head>
 <body class="text-center">
-    <img src="./assets/images/cosaic_icon.png" alt="cosaic" class = "cosaic">
-    <div class="whole-group" >
+    <div class="whole-group-signup" >
     <!-- Main Form -->
     <div class="login-form-1">  
-        <div class="logo">REGISTER</div>      
+        <img class="login-signup-logo" src='./assets/images/cosaic_navbar_logo.png' alt='cosaic-logo'>
+        <div class="logo">Sign up now to connect with your friends</div>      
         <form id="login-form" class="text-left">
           <div class="main-login-form">
 
@@ -60,7 +60,11 @@ require_once('includes/server.php'); // server.php handles loogic for logging in
                 </button>
               </form>
             </div>
-
+            
+            <div class="policy-notice">
+              By signing up, you agree to our <br>
+              <strong>Terms</strong>, <strong>Data Policy</strong>, and <strong>Cookies Policy</strong>. 
+            </div>
           </div>
           <div class="etc-login-form">
             <p>already have an account? <a href="login.php">login here</a></p>

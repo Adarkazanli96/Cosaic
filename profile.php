@@ -149,9 +149,11 @@ if(isset($_GET['profile_username'])){
         // by the current user. 
         if ($liked) {
           $disabled = "disabled='disabled'";
+          $like_button_class = "like-button-disabled"; 
         }
         else {
-          $disabled = ""; ;
+          $disabled = ""; 
+          $like_button_class = "like-button"; 
         }
         
         // Retrieves the number of likes the post has. 
@@ -166,7 +168,7 @@ if(isset($_GET['profile_username'])){
                 <p class='caption'>$caption</p>
                 
                 <form method='POST' style='margin-bottom: 0.5em;'>
-                  $like_count <input type='submit' value='    likes' class='like-button' name='like-button-$post_id' $disabled/>
+                  $like_count <input type='submit' value='    likes' class='$like_button_class' name='like-button-$post_id' $disabled/>
                 </form>
                 
                 <p class='timestamp'>$timestamp</p>

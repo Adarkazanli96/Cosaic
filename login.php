@@ -25,11 +25,10 @@ require_once('includes/server.php');
   </head>
 
   <body class="text-center">
-    <img src="./assets/images/cosaic_icon.png" alt="cosaic" class = "cosaic">
-    <div class="whole-group" >
+    <div class="whole-group-login" >
     <!-- Main Form -->
       <div class="login-form-1">  
-          <div class="logo">LOG IN</div>      
+          <img class="login-signup-logo" src='./assets/images/cosaic_navbar_logo.png' alt='cosaic-logo'>    
           <form id="login-form" class="text-left">
             <div class="main-login-form">
               <div class="login-group">
