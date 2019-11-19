@@ -44,14 +44,15 @@ $posts_table = "CREATE TABLE IF NOT EXISTS `posts` (
 )";
 	
 $create_table = "CREATE TABLE IF NOT EXISTS `create` (
-  `username` VARCHAR(100), 
-  `id` INT(8)
+ id int(8), username varchar(100),
+ CONSTRAINT FOREIGN KEY (id) REFERENCES posts (id),
+ CONSTRAINT FOREIGN KEY (username) REFERENCES users (username)
 )"; 
 
 $tagged_in_table = "CREATE TABLE IF NOT EXISTS `tagged_in` (
-  `username` VARCHAR(100), 
-  `id` INT(8),
-  PRIMARY KEY (id, username)
+ id int(8), username varchar(100),
+ CONSTRAINT FOREIGN KEY (id) REFERENCES posts (id),
+ CONSTRAINT FOREIGN KEY (username) REFERENCES users (username)
 )"; 
 
 $likes_table = "CREATE TABLE IF NOT EXISTS `likes` (
@@ -61,15 +62,33 @@ $likes_table = "CREATE TABLE IF NOT EXISTS `likes` (
 )";
 
 $post_has_likes_table = "CREATE TABLE IF NOT EXISTS `post_has_likes` (
-  `post_id` INT(8),
-  `like_id` INT(8),
-  PRIMARY KEY (post_id, like_id)
+  post_id int(8), like_id int(8),
+  CONSTRAINT FOREIGN KEY (post_id) REFERENCES posts (id),
+  CONSTRAINT FOREIGN KEY (like_id) REFERENCES likes (id)
 )";
 
 $user_add_likes_table = "CREATE TABLE IF NOT EXISTS `user_add_likes` (
-  `username` VARCHAR(100),
-  `like_id` INT(8),
-  PRIMARY KEY (username, like_id)
+  like_id int(8), username varchar(100),
+  CONSTRAINT FOREIGN KEY (like_id) REFERENCES likes (id),
+  CONSTRAINT FOREIGN KEY (username) REFERENCES users (username)
+)";
+
+$comments_table = "CREATE TABLE IF NOT EXISTS `comments` (
+  `id` INT(8) NOT NULL AUTO_INCREMENT,
+  `timestamp` DATETIME NOT NULL,
+  PRIMARY KEY (id)
+)";
+
+$post_has_comments_table = "CREATE TABLE IF NOT EXISTS `post_has_comments` (
+  post_id int(8), comment_id int(8),
+  CONSTRAINT FOREIGN KEY (post_id) REFERENCES posts (id),
+  CONSTRAINT FOREIGN KEY (comment_id) REFERENCES comments (id)
+)";
+
+$user_add_comments_table = "CREATE TABLE IF NOT EXISTS `user_add_comments` (
+  comment_id int(8), username varchar(100),
+  CONSTRAINT FOREIGN KEY (comment_id) REFERENCES comments (id),
+  CONSTRAINT FOREIGN KEY (username) REFERENCES users (username)
 )";
 
 // Creates the users, posts, and create tables in the database. 
@@ -79,7 +98,11 @@ $queries = array($users_table,
                  $tagged_in_table, 
                  $likes_table, 
                  $post_has_likes_table, 
-                 $user_add_likes_table); 
+                 $user_add_likes_table,
+                 $comments_table, 
+                 $post_has_comments_table, 
+                 $user_add_comments_table
+                ); 
 
 foreach ($queries as $query) {
   $db -> query($query);
