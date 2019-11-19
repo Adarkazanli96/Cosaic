@@ -169,6 +169,13 @@ require_once ('includes/server.php')
 // DISPLAY POSTS
 //----------------------------------------------------------------------
       $current_user = $_SESSION["username"]; 
+
+      // get user information for modal
+      $result = $db -> query("SELECT profile_img FROM `users` WHERE username = '$current_user'");
+      $profile_pic = $result -> fetch_assoc();
+      $profile_pic = $profile_pic['profile_img'];
+
+      // get post informatiion for displaying posts
       $result = $db -> query("SELECT id 
                               FROM `create` 
                               WHERE username = '$current_user'
@@ -233,9 +240,9 @@ require_once ('includes/server.php')
         
         echo "<div class='col-md-4 post'>
         
-                <img class='post-image'";
-                echo 'onclick="showModal(`' . base64_encode($post_image) . '`, `' . $caption . '`)"'; // echo the onclick event with double quotes
-                echo "src='data:image/jpg;base64,".base64_encode($post_image)."'height='250px' width='250px'/>
+                <img class='post-image'
+                onclick='showModal(`" . base64_encode($post_image) . "`, `" . $caption . "`, `" . base64_encode($profile_pic) . "`, `" . $current_user . "`)'
+                src='data:image/jpg;base64,".base64_encode($post_image)."'height='250px' width='250px'/>
                   
                 <p class='caption'>$caption</p>
                 
@@ -273,16 +280,22 @@ require_once ('includes/server.php')
   <!-- The Close Button -->
   <span class="close">&times;</span>
 
-  <!-- Modal Content (The Image) -->
+  <!-- Modal Content -->
   <div class="modal-content">
-    <div style = "text-align:center !important; float: left; width: 60%; height: 100%">
-      <img class="img-responsive" id="img01" style="margin: auto; max-width: 100%; max-height: 100%;"/>
+    <div style = "text-align: center !important;float: left;width: 60%;height: 100%">
+      <img class="img-responsive" id="modal-picture"/>
     </div>
-    <div style="width: 40%; height: 100%;background-color: white; float: left;position: relative;">
-      <span id='modal-caption' style="padding-top: 15px; padding-left: 15px"></span>
-      <hr/>
-      <form action="/action_page.php" style = "position: absolute; 
-                bottom: 0px;left: 0px; right: 0px;">
+    <div class = "modal-description">
+      <div style = "margin-top: 15px; margin-left: 15px;">
+        <img id = 'modal-profile-pic' alt='s' style = 'float: left'/>
+        <div style = 'display:block;float:left;margin-left:15px;margin-top:5px'>
+          <div id = "modal-username" style = 'font-weight:bold;'></div>
+          <div id='modal-caption'></div>
+        </div>
+      <div>
+      <br>
+      <hr style = "margin-left: -15px; margin-top: 50px; clear: both;"/>
+      <form style = "position: absolute;bottom: 0px;left: 0px;right: 0px;">
         <input type="text" style = "width:80%; height: 100%; float: left" placeholder="Add a comment...">
         <button style = 'width: 20%; float: left;'>Post</button>
       </form>
@@ -311,18 +324,18 @@ require_once ('includes/server.php')
 }?>
 
 <script>
-function showModal(image, caption){
+function showModal(post_image, caption, profile_pic, username){
     var modal = document.getElementById('post-modal');
-    var modalImg = document.getElementById('img01');
+    var modalImg = document.getElementById('modal-picture');
     var modalCaption = document.getElementById('modal-caption')
-
-    var elements = document.getElementsByClassName('post-image');
+    var profilePicture = document.getElementById('modal-profile-pic')
+    var modalUsername = document.getElementById('modal-username')
 
     modal.style.display = 'block';
-    console.log('getting the image: ', image, 'getting the caption', caption)
-
-    modalImg.src = `data:image/jpg;base64, ${image}`;
+    modalImg.src = `data:image/jpg;base64, ${post_image}`;
+    profilePicture.src = `data:image/jpg;base64, ${profile_pic}`;
     modalCaption.innerHTML = caption
+    modalUsername.innerHTML = username;
 
     //user clicks on (x), close the modal
     document.getElementsByClassName('close')[0].onclick = function() {
@@ -330,7 +343,5 @@ function showModal(image, caption){
       modalCaption.innerHTML = ''
       modal.style.display = 'none';
     }
-
-    //'showModal('" . $image . "','" . $caption . "')'
 }
 </script>
