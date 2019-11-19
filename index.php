@@ -266,6 +266,24 @@ require_once ('includes/server.php')
     </form>
 </div>
 
+<!-- The Post modal -->
+<div id="post-modal" class="modal">
+
+  <!-- The Close Button -->
+  <span class="close">&times;</span>
+
+  <!-- Modal Content (The Image) -->
+  <div class="modal-content">
+    <img id="img01" style="width: 60%; height: 100%;display: block; float: left;"/>
+    <div style="width: 40%; height: 100%;background-color: white; float: right;">
+      <form action="/action_page.php">
+        Comment: <input type="text" name="new-comment"><br>
+        <input type="submit" value="Submit">
+      </form>
+    <div>
+  </div>
+</div>
+
 
   </body>
 </html>
@@ -285,3 +303,26 @@ require_once ('includes/server.php')
   }
   return $result;
 }?>
+
+
+<script>
+var modal = document.getElementById("post-modal");
+var modalImg = document.getElementById("img01");
+
+var elements = document.getElementsByClassName("post-image");
+
+var displayModalWithPic = function(element) {
+  modal.style.display = "block";
+  modalImg.src = element.target.currentSrc;
+};
+
+for (var i = 0; i < elements.length; i++) {
+    var element = elements[i]
+    element.addEventListener('click', (element) => {displayModalWithPic(element)}, false);
+}
+
+//user clicks on (x), close the modal
+document.getElementsByClassName("close")[0].onclick = function() {
+  modal.style.display = "none";
+}
+</script>

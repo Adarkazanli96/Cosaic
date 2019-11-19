@@ -31,7 +31,7 @@ $users_table = "CREATE TABLE IF NOT EXISTS `users` (
   `last_name` varchar(100) NOT NULL,
   `description` varchar(250)NULL,
   `password` varchar(100) NOT NULL,
-  `profile_img` BLOB NULL 
+  `profile_img` LONGBLOB NULL 
 )";
 
 $posts_table = "CREATE TABLE IF NOT EXISTS `posts` (
