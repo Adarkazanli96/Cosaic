@@ -147,9 +147,10 @@ margin: 0;
 
 /* Modal Content (image) */
 .modal-content {
-  width: 700px;
-  height: 630px;
+  width: 916px;
+  height: 500px;
   margin: 0 auto;
+  background-color: black !important;
 }
 
 /* Add Animation */

@@ -274,8 +274,10 @@ require_once ('includes/server.php')
 
   <!-- Modal Content (The Image) -->
   <div class="modal-content">
-    <img id="img01" style="width: 60%; height: 100%;display: block; float: left;"/>
-    <div style="width: 40%; height: 100%;background-color: white; float: right;">
+    <div style = "text-align:center !important; float: left; width: 60%; height: 100%">
+      <img class="img-responsive" id="img01" style="margin: auto; max-width: 100%; max-height: 100%;"/>
+    </div>
+    <div style="width: 40%; height: 100%;background-color: white; float: left;">
       <form action="/action_page.php">
         Comment: <input type="text" name="new-comment"><br>
         <input type="submit" value="Submit">
