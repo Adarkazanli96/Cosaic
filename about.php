@@ -3,7 +3,8 @@
      
    <title>Cosaic</title>  
    <link rel="icon" href="./assets/images/cosaic_favicon.png">
-  
+   <link rel="stylesheet" type="text/css" href="./assets/css/about.css" > 
+<!--
    <style>
    body {
       font-family: 'Varela Round';
@@ -11,16 +12,29 @@
       background-repeat: no-repeat; 
       background-size: 90%;  
     }
+    
+     .about-text h1 {
+       color: #E3243C; 
+       font-weight: bold;
+       font-size: 1.5em; 
+       padding-top: 1em; 
+     }
      
      .about-text {
        font-size: 1.5em; 
-       color: red;
+       font-weight: bold; 
+       color: #e8445a;
        margin-top: 10%; 
        margin-left: 50%;
        width: 35%; 
      }
      
+     .about-text p {
+       margin-top: 1em;
+     }
+     
    </style>
+-->
     
 <!--   <link rel="stylesheet" type="text/css" href="./assets/css/loginSignup.css" > -->
 
@@ -40,10 +54,12 @@
 
   <body>
     <div class="about-text">
+      <h1>About</h1>
       <p>Cosiac is an image sharing platform designed to help you share your story with the world. </p>
       
-      <p>Revision: 20 November, 2019</p>
-      <p>Created by Ahmed Darkazanli, Albert Ong, and Anh Phan.</p>
+      <p>Revision: 20 November, 2019<br>
+      Created by Ahmed Darkazanli, Albert Ong, and Anh Phan<br>
+      Source code can be found <a href="https://github.com/CS-157A-Team-38/CS157A-Team-38" target="_blank">here</a></p>
     </div>
   </body>
 

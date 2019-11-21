@@ -78,7 +78,7 @@ require_once('includes/server.php'); // server.php handles loogic for logging in
       <a class="item" href="about.php" target="_blank">ABOUT</a> 
       <p class="item">SUPPORT</p> 
       <p class="item">PRESS</p> 
-      <p class="item">JOBS</p> 
+      <p class="item">CAREERS</p> 
       <p class="item">PRIVACY</p> 
       <p class="item">TERMS</p> 
       <p class="item">DIRECTORY</p> 

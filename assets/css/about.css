@@ -1,0 +1,34 @@
+   
+/* Written by Albert Ong
+ *
+ * Styles the about page
+ * 
+ * Created: 21.11.2019
+ */
+
+body {
+  font-family: 'Varela Round';
+  background: url(../images/cosaic_about_background.png);
+  background-repeat: no-repeat; 
+  background-size: 90%;  
+}
+
+ .about-text h1 {
+   color: #E3243C; 
+   font-weight: bold;
+   font-size: 1.5em; 
+   padding-top: 1em; 
+ }
+
+ .about-text {
+   font-size: 1.5em; 
+   font-weight: bold; 
+   color: #e8445a;
+   margin-top: 10%; 
+   margin-left: 50%;
+   width: 35%; 
+ }
+
+ .about-text p {
+   margin-top: 1em;
+ }
