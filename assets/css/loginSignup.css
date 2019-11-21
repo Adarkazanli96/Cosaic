@@ -1,11 +1,9 @@
 body {
   background: #efefef;
-  width: 100%; 
-/*  padding: 10px;*/
   font-family: 'Varela Round';
-  background-image: url(../images/cosaic_login_signup_background.png);
+  background: url(../images/cosaic_login_signup_background.png);
   background-repeat: no-repeat; 
-  background-size: cover; 
+  background-size: 100%; 
 }
 /*=== 2. Anchor Link ===*/
 a {
@@ -28,8 +26,13 @@ a:hover {
 
 .login-form-1 {
   max-width: 300px;
-  border-radius: 5px;
   display: inline-block;
+/*
+  border: 5em solid white; 
+  border-radius: 1em; 
+*/
+  background: white; 
+  margin-bottom: 20%; 
 }
 .main-login-form {
   position: relative;
@@ -264,7 +267,7 @@ label:hover:before {
 /*=== 9. Misc ===*/
 .logo {
   font-size: 1.5em;
-  color: #aaaaaa;
+  color: #AAAAAA;
   font-weight: bold;
   padding-bottom: 0.5em; 
 
@@ -296,4 +299,30 @@ label:hover:before {
   text-align: center; 
   font-size: 0.75em; 
   color: #aaaaaa;
+}
+
+
+.bottom-bar {
+  background: white; 
+/*  overflow: hidden;*/
+  height: 7%; 
+  width: 100%; 
+}
+
+.bottom-bar .item {
+  color: #AAAAAA;
+  padding-left: 2em; 
+  display: inline;
+  font-weight: bold;
+}
+
+.bottom-bar .copyright {
+  color: #AAAAAA;
+  padding-left: 4em; 
+  display: inline;
+  font-weight: bold;
+}
+
+.bottom-bar .item:hover {
+  color: #DD434A;
 }

@@ -73,6 +73,18 @@ require_once('includes/server.php'); // server.php handles loogic for logging in
         </form>
       </div> 
     </div>
+  
+    <div class="bottom-bar">
+      <a class="item" href="about.php" target="_blank">ABOUT</a> 
+      <p class="item">SUPPORT</p> 
+      <p class="item">PRESS</p> 
+      <p class="item">JOBS</p> 
+      <p class="item">PRIVACY</p> 
+      <p class="item">TERMS</p> 
+      <p class="item">DIRECTORY</p> 
+      <p class="copyright">© FALL 2019 CS 157A TEAM 38</p> 
+      
+    </div>
   </body>
 
 </html>     
