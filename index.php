@@ -97,9 +97,14 @@ require_once ('includes/server.php')
               <p id ="profile-username" ><?php echo $_SESSION['username']; ?></p>
       
               <?php 
+                $username = $_SESSION['username']; 
                 $first_name = $_SESSION['first_name']; 
                 $last_name = $_SESSION['last_name']; 
-                echo "<p id='profile-name'>$first_name $last_name</p>";
+      
+//                $result = mysqli_query($db, "SELECT COUNT(*) FROM `create` WHERE username = '$username'"); 
+//                $total_posts = mysqli_fetch_row($result)[0];     
+      
+                echo "<p id='profile-name'>$first_name $last_name</p>";   
               ?>
       
             <p id ="profile-description" >
@@ -187,7 +192,7 @@ require_once ('includes/server.php')
         
         $post_id = $row["id"]; 
         // $likes = $row["likes"]; 
-        $timestamp = date("M j, g:i A", strtotime($row["timestamp"])); 
+        $timestamp = date("M j g:i A", strtotime($row["timestamp"])); 
         $caption = $row["caption"]; 
         $caption = show_tags($caption);
         $post_image = $row["post_image"]; 

@@ -3,11 +3,17 @@
 require_once("config.php");
 session_start();
 
-// Login to to the database
-$db = mysqli_connect($servername, $username, $password, $dbname);
-if ($db->connect_error) {
+// Login to to the server
+$db = mysqli_connect($servername, $username, $password);
+if ($db -> connect_error) {
   die("Connection failed: " . $db->connect_error);
 }
+
+// Creates a database named 'cosaic' if it does not exists
+$db -> query("CREATE DATABASE IF NOT EXISTS $dbname"); 
+
+// Connects to the database. 
+$db = mysqli_connect($servername, $username, $password, $dbname);
 
 $username = "";
 $password = "";
@@ -31,7 +37,7 @@ $users_table = "CREATE TABLE IF NOT EXISTS `users` (
   `last_name` varchar(100) NOT NULL,
   `description` varchar(250)NULL,
   `password` varchar(100) NOT NULL,
-  `profile_img` BLOB NULL 
+  `profile_img` LONGBLOB NULL 
 )";
 
 $posts_table = "CREATE TABLE IF NOT EXISTS `posts` (
