@@ -1,8 +1,9 @@
 body {
   background: #efefef;
-  padding: 10px;
   font-family: 'Varela Round';
-
+  background: url(../images/cosaic_login_signup_background.png);
+  background-repeat: no-repeat; 
+  background-size: 100%; 
 }
 /*=== 2. Anchor Link ===*/
 a {
@@ -25,7 +26,6 @@ a:hover {
 
 .login-form-1 {
   max-width: 300px;
-  border-radius: 5px;
   display: inline-block;
 }
 .main-login-form {
@@ -260,15 +260,26 @@ label:hover:before {
 }
 /*=== 9. Misc ===*/
 .logo {
-  padding: 15px 0;
-  font-size: 25px;
-  color: #aaaaaa;
+  font-size: 1.5em;
+  color: #AAAAAA;
   font-weight: bold;
+  padding-bottom: 0.5em; 
 
 }
-.whole-group{
-  margin: 30% 30% 25% 25%;
+
+.login-signup-logo {
+  padding-bottom: 2.5em;
+  height: 8em; 
 }
+
+.whole-group-login {
+  margin: 10% 0% 5% 40%;
+}
+
+.whole-group-signup {
+  margin: 5% 0% 5% 40%;
+}
+
 .cosaic {
   float: left;
   margin: 30% 5% 5% 22%;
@@ -276,4 +287,37 @@ label:hover:before {
   max-width: 300px;
   width: 200px;
   height: 200px;
+}
+
+.policy-notice {
+  text-align: center; 
+  font-size: 0.75em; 
+  color: #aaaaaa;
+}
+
+
+.navbar {
+  background: white; 
+  height: 8%; 
+  width: 100%;
+  margin-top: 20%; 
+}
+
+.navbar .item {
+  color: #AAAAAA;
+  padding-left: 2em; 
+  display: inline;
+  font-weight: bold;
+}
+
+.navbar .copyright {
+  color: #AAAAAA;
+  padding-left: 4em; 
+  display: inline;
+  font-weight: bold;
+}
+
+.navbar .item:hover {
+  color: #DD434A;
+  text-decoration: none; 
 }

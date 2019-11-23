@@ -33,40 +33,20 @@ require_once ('includes/server.php')
 
 <body>
 
-<nav class="navbar navbar-default" role="navigation">
+<nav class="navbar" role="navigation">
         <div class="navbar-header">
-            <img href="index.php" src='./assets/images/cosaic_navbar_logo.png' alt='like' height="40em">
+            <a href="index.php"><img href="index.php" src='./assets/images/cosaic_navbar_logo.png' alt='cosaic-logo' height="40em"></a>
         </div>
-        <div class="collapse navbar-collapse">
+        <div class="navbar-collapse">
             <ul class="nav navbar-nav">
-				
-                <!-- HOME BUTTON -->
-                <li>
-                    <a href="index.php" class="current">Home</a>
-                </li>
                 
-                <!-- POST BUTTON -->
-                <li>
-				            <a onclick="openCreatePostForm()" id = 'create-post' class="current">Post</a>
-                </li>
-
-                <!-- CREATE POST POPUP -->
-			   <div class="form-popup" id="create-post-form">
-                    <form class="form-container" method="post" enctype="multipart/form-data">
-						
-						<label>Image</label>
-                        <input type="file" name="post-image" id="post-image" accept="image/*"/>  
-						
-                        <label>Caption</label>
-                        <input type="text" name ="post-caption" placeholder="Insert caption" autocomplete = "off">
-                         
-                        <input type="submit" name="create-post" id="create-post" value="Post" class="btn btn-info" /> 
-                        <button type="button" class="btn cancel" onclick="closeForms()">Close</button>
-                    </form>
+                <!-- CREATE POST BUTTON -->
+                <div style="margin-top: 0.6em;">
+                  <a onclick="openCreatePostForm()" class="btn btn-default btn-sx create-post-button-text">Post</a>
                 </div>
-      
+
 			    <!-- EDIT PROFILE POPUP -->
-                <div class="form-popup-profile" id="edit-profile-form">
+                <div class="form-popup-profile edit-profile-popup" id="edit-profile-form">
                     <form class="form-container" method="post" enctype="multipart/form-data">
 						
                         <label>Description</label>
@@ -81,13 +61,7 @@ require_once ('includes/server.php')
                 </div>
                             
             </ul> <!-- POPUP/UPDATE PROFILE FORM ON NAV BAR--- DONE HERE! --> 
-
-            <ul class="nav navbar-nav navbar-right">
-                <li>
-                  <a href="logout.php">Logout</a>
-                </li>
-            </ul>
-      
+            
             <!-- SEACH FORM -->
             <form class="navbar-form navbar-left" role="search" action = "search.php" method = "GET" name = "search_form">
                 <div class="form-group">
@@ -99,12 +73,18 @@ require_once ('includes/server.php')
 					</div>
                 </div>
             </form>
+          
+            <!-- LOGOUT BUTTON-->  
+            <ul class="btn btn-default logout-button">
+              <a href="logout.php" class="logout-button-text">Logout</a>
+            </ul>
+
         </div>
     </nav>
         
     <!-- DISPLAY PROFILE INFORMATION  -->  
     <div class="jumbotron">
-        <div class="container" >
+        <div class="container">
             <img id ="profile_img">
                 <?php 
                     if($_SESSION['profile_picture']){
@@ -137,9 +117,22 @@ require_once ('includes/server.php')
         </div>
 
     </div>
+      
+   <!-- CREATE POST POPUP -->
+   <div class="form-popup" id="create-post-form">
+        <form class="form-container" method="post" enctype="multipart/form-data">
 
+            <label>Image</label>
+            <input type="file" name="post-image" id="post-image" accept="image/*"/>  
 
-    
+            <label>Caption</label>
+            <input type="text" name ="post-caption" placeholder="Insert caption" autocomplete = "off">
+
+            <input type="submit" name="create-post" id="create-post" value="Post" class="btn btn-info" /> 
+            <button type="button" class="btn cancel" onclick="closeForms()">Close</button>
+        </form>
+    </div>
+      
     <?php
     
     //UPDATE CAPTION
@@ -165,9 +158,9 @@ require_once ('includes/server.php')
       
     }
 
-//----------------------------------------------------------------------
-// DISPLAY POSTS
-//----------------------------------------------------------------------
+    //----------------------------------------------------------------------
+    // DISPLAY POSTS
+    //----------------------------------------------------------------------
       $current_user = $_SESSION["username"]; 
       $result = $db -> query("SELECT id 
                               FROM `create` 
@@ -180,8 +173,8 @@ require_once ('includes/server.php')
         array_push($current_user_posts, $row["id"]);  
       }
       
-      echo "<div class='container'>
-              <div class='row' style='width: 60em'>"; 
+      echo "<div class='container align-center' style='padding-left: 10%'>
+              <div class='row' style='width: 60em;'>"; 
       
       // Iterates through every post the user has posted. 
       foreach ($current_user_posts as $post_id) {
@@ -222,9 +215,11 @@ require_once ('includes/server.php')
         // by the current user. 
         if ($liked) {
           $disabled = "disabled='disabled'";
+          $like_button_class = "like-button-disabled"; 
         }
         else {
-          $disabled = ""; ;
+          $disabled = ""; 
+          $like_button_class = "like-button"; 
         }
         
         // Retrieves the number of likes the post has. 
@@ -232,20 +227,21 @@ require_once ('includes/server.php')
         $like_count = mysqli_fetch_row($fetch_likes)[0]; 
 
         echo "<div class='col-md-4 post'>
-        
                 <img class='post-image' 
                   src='data:image/jpg;base64,".base64_encode($post_image)."'height='250px' width='250px'/>
                   
                 <p class='caption'>$caption</p>
                 
-                <form method='POST' style='margin-bottom: 0.5em;'>
-                  $like_count <input type='submit' value='    likes' class='like-button' name='like-button-$post_id' $disabled/>
+                <form method='POST' style='margin-bottom: 0.5em; display: inline-block;'>
+                  $like_count <input type='submit' value='    likes' class='$like_button_class' name='like-button-$post_id' $disabled/>
                 </form>
+                
+                <button class='fa fa-edit post-button' id = '$post_id' style='float: right;'> Edit </button>
                 
                 <p class='timestamp'>$timestamp</p>
                 
   
-                <button class='fa fa-edit post-button' id = '$post_id'> Edit </button>
+                
                 </div>";  
         }
       echo "  </div>
@@ -261,7 +257,7 @@ require_once ('includes/server.php')
         <input type="text" id="caption" name ="update-post" placeholder="Enter your new caption" autocomplete = "off">
         <input type="submit" name="update-post-caption" id = 'insert-update' value="Update" class="btn btn-info" />
         <input type="hidden" value="" id="hidden-input" name="test"/>
-        <input type="submit" name="delete_post" id="insert" value="Delete_Post" class="btn btn-info" />
+        <input type="submit" name="delete_post" id="insert" value="Delete Post" class="btn btn-info" />
         <button type="button" class="btn cancel" onclick="closeForms()">Close</button>
     </form>
 </div>
