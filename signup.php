@@ -74,16 +74,15 @@ require_once('includes/server.php'); // server.php handles loogic for logging in
       </div> 
     </div>
   
-    <div class="bottom-bar">
+    <div class="navbar">
       <a class="item" href="about.php" target="_blank">ABOUT</a> 
       <p class="item">SUPPORT</p> 
       <p class="item">PRESS</p> 
-      <p class="item">CAREERS</p> 
+      <a class="item" href="careers.php" target="_blank">CAREERS</a> 
       <p class="item">PRIVACY</p> 
       <p class="item">TERMS</p> 
       <p class="item">DIRECTORY</p> 
       <p class="copyright">© FALL 2019 CS 157A TEAM 38</p> 
-      
     </div>
   </body>
 

@@ -1,11 +1,42 @@
 body {font-family: 'Varela Round';}
 * {box-sizing: border-box;}
 
+/* NAVBAR */
+.navbar {
+  background-color: white; 
+}
+
+.navbar-header {
+  margin: 1em 2em 0em 2em; 
+}
+
+.navbar-collapse {
+  margin-top: .7em;
+}
+
+.logout-button {
+  margin-top: .7em; 
+  position: absolute;
+  right: 0px;
+  margin-right: 3%;
+}
+
+
+.logout-button-text {
+  color: #000000;
+  
+}
+
+.logout-button-text:hover {
+  color: #000000;
+  text-decoration: none; 
+}
+
 /* The popup form - hidden by default */
 .form-popup {
   display: none;
   position: absolute;
-  border: 3px solid #f1f1f1;
+/*  border: 3px solid #f1f1f1;*/
   top: 20px;
   left: 180px;
 }
@@ -22,18 +53,17 @@ body {font-family: 'Varela Round';}
   display: none;
   position: absolute;
   border: 3px solid #f1f1f1;
-  
-margin: 0;
-    top: 200px;
-    left: 60%;
-
-
+  margin: 0;
+  top: 200px;
+  left: 60%;
 }
+
 /* Add styles to the form container */
 .form-container {
   max-width: 300px;
   max-height: 300px;
-/*  padding: 10px;*/
+  padding: 10px;
+  background-color: white;
 }
 
 /* Full-width input fields */
@@ -59,7 +89,7 @@ margin: 0;
   border: none;
   cursor: pointer;
   width: 40%;
-  margin:10px 10px 10px 12px;
+  margin: 10px 10px 10px 12px;
   opacity: 0.8;
 }
 
@@ -95,6 +125,10 @@ margin: 0;
   margin: 50px;
 }
 
+.edit-profile-popup {
+  padding-top: 8em;
+  border: none; 
+}
 
 /* IMAGE POSTS */
 .post {

@@ -61,6 +61,17 @@ require_once('includes/server.php');
           </form>
         </div>
     </div>
+    
+    <div class="navbar" style="margin-top: 27.5%; ">
+      <a class="item" href="about.php" target="_blank">ABOUT</a> 
+      <p class="item">SUPPORT</p> 
+      <p class="item">PRESS</p> 
+      <a class="item" href="careers.php" target="_blank">CAREERS</a> 
+      <p class="item">PRIVACY</p> 
+      <p class="item">TERMS</p> 
+      <p class="item">DIRECTORY</p> 
+      <p class="copyright">© FALL 2019 CS 157A TEAM 38</p> 
+    </div>
   </body>
 
 </html>

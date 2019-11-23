@@ -22,13 +22,17 @@ body {
 
  .about-text {
    font-size: 1.5em; 
-   font-weight: bold; 
-   color: #e8445a;
-   margin-top: 10%; 
+/*   font-weight: bold; */
+   color: #888888;
+   margin-top: 8.5%; 
    margin-left: 50%;
    width: 35%; 
  }
 
  .about-text p {
-   margin-top: 1em;
+   margin-top: 0.25em;
+ }
+
+ .about-text .main {
+   margin-bottom: 1.5em;
  }

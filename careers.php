@@ -1,9 +1,28 @@
 <html >
   <head>
      
-   <title>Cosaic | About</title>  
+   <title>Cosaic | Careers</title>  
    <link rel="icon" href="./assets/images/cosaic_favicon.png">
-   <link rel="stylesheet" type="text/css" href="./assets/css/about.css" > 
+   <style>
+    body {
+      font-family: 'Varela Round';
+      background: url(assets/images/cosaic_careers_background.png);
+      background-repeat: no-repeat; 
+      background-size: 90%;  
+    }
+
+   .text {
+     font-size: 1.5em; 
+     color: #888888;
+     margin-top: 15%; 
+     margin-left: 50%;
+     width: 30%; 
+   } 
+  
+    .text p {
+     margin-top: 1em;
+   }
+   </style>
 
     <link href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.0/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
    <script src="//maxcdn.bootstrapcdn.com/bootstrap/3.3.0/js/bootstrap.min.js"></script>
@@ -20,14 +39,10 @@
   </head>
 
   <body>
-    <div class="about-text">
-      <p class="main">Cosiac is an image sharing platform designed to help you share your story with the world. 
-      Our mission is to bring people together by fostering communities around the things that they love. 
-      We hope that Cosiac will both inspire your creativity and help share that inspiration with the world.</p>
+    <div class="text">
+      <p>Thank you for your interest, but we currently do not have any job openings.</p>
       
-      <p>Revision: 22 November, 2019</p>
-      <p>Created by Ahmed Darkazanli, Albert Ong, and Anh Phan</p>
-      <p>Github repository can be found <a href="https://github.com/CS-157A-Team-38/CS157A-Team-38" target="_blank">here</a></p>
+      <p>If an opening arises, this page will be updated accordingly.</p>
     </div>
   </body>
 

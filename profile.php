@@ -32,22 +32,15 @@ if(isset($_GET['profile_username'])){
 
 <body>
 
-<nav class="navbar navbar-default" role="navigation">
+<nav class="navbar" role="navigation">
         <div class="navbar-header">
-            <img href="index.php" src='./assets/images/cosaic_navbar_logo.png' alt='like' height="40em">
+            <a href="index.php"><img src='./assets/images/cosaic_navbar_logo.png' alt='like' height="40em"></a>
         </div>
         <div class="collapse navbar-collapse">
             <ul class="nav navbar-nav">
-                <li>
-                    <a href="index.php" class="current">Home</a>
-                </li>              
+            
             </ul> <!-- POPUP/UPDATE PROFILE FORM ON NAV BAR--- DONE HERE! --> 
 
-            <ul class="nav navbar-nav navbar-right">
-                <li>
-                    <a href="logout.php">Logout</a>
-                </li>
-            </ul>
             <form class="navbar-form navbar-left" role="search" action = "search.php" method = "GET" name = "search_form">
                 <div class="form-group">
                     <input type="text" class="form-control" placeholder="Search" onkeyup="getLiveSearchUsers(this.value)" name = "q" autocomplete = "off" id="search_text_input"/>
@@ -58,6 +51,11 @@ if(isset($_GET['profile_username'])){
                         </div>
                 </div>
             </form>
+      
+            <!-- LOGOUT BUTTON-->  
+            <ul class="btn btn-default logout-button">
+              <a href="logout.php" class="logout-button-text">Logout</a>
+            </ul>
         </div>
     </nav>
 
@@ -108,7 +106,7 @@ if(isset($_GET['profile_username'])){
         array_push($current_user_posts, $row["id"]);  
       }
       
-      echo "<div class='container'>
+      echo "<div class='container align-center' style='padding-left: 10%'>
               <div class='row' style='width: 60em'>"; 
       
       // Iterates through every post the user has posted. 
