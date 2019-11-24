@@ -51,12 +51,7 @@ function closeForms() {
 
 
 
-//Open modifyCaptionForm
-/**
-function modifyCaptionForm() {
-    document.getElementById("save-NewCaption").style.display = "block";
-}
-*/
+
 // Closes modifyCaptionForm
 function closeCaptionForm() {
     document.getElementById("closeCaptionForms").style.display = "none";
@@ -71,8 +66,22 @@ $(document).ready(function(){
             $('#hidden-input').val(id)
         })
     });
+})
+
+
+
+// get post id for comment feature
+$(document).ready(function(){
+    $('.comment-button').each(function(){
+        var id = $(this).attr('id')
+        $(this).click(function(index){
+            document.getElementById("save-Comment").style.display = "block";
+            $('#hidden-input-post-id').val(id)
+        })
+    });
 
 })
+
 
 
 // check if input file is valid

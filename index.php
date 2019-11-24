@@ -199,7 +199,8 @@ require_once ('includes/server.php')
         
         $row = $result -> fetch_assoc(); 
         
-        $post_id = $row["id"]; 
+        $post_id = $row["id"];
+
         // $likes = $row["likes"]; 
         $timestamp = date("M j, g:i A", strtotime($row["timestamp"])); 
         $caption = $row["caption"]; 
@@ -240,10 +241,12 @@ require_once ('includes/server.php')
         
         echo "<div class='col-md-4 post'>
         
-                <img class='post-image'
+                <img class='post-image comment-button'
                 onclick='showModal(`" . base64_encode($post_image) . "`, `" . $caption . "`, `" . base64_encode($profile_pic) . "`, `" . $current_user . "`)'
-                src='data:image/jpg;base64,".base64_encode($post_image)."'height='250px' width='250px'/>
+                src='data:image/jpg;base64,".base64_encode($post_image)."'height='250px' width='250px' id = '$post_id'
+                />
                   
+
                 <p class='caption'>$caption</p>
                 
                 <form method='POST' style='margin-bottom: 0.5em;'>
@@ -251,7 +254,6 @@ require_once ('includes/server.php')
                 </form>
                 
                 <p class='timestamp'>$timestamp</p>
-                
   
                 <button class='fa fa-edit post-button' id = '$post_id'> Edit </button>
                 </div>";  
@@ -269,19 +271,20 @@ require_once ('includes/server.php')
         <input type="text" id="caption" name ="update-post" placeholder="Enter your new caption" autocomplete = "off">
         <input type="submit" name="update-post-caption" id = 'insert-update' value="Update" class="btn btn-info" />
         <input type="hidden" value="" id="hidden-input" name="test"/>
+
         <input type="submit" name="delete_post" id="insert" value="Delete_Post" class="btn btn-info" />
         <button type="button" class="btn cancel" onclick="closeForms()">Close</button>
     </form>
 </div>
 
 <!-- The Post modal -->
-<div id="post-modal" class="modal">
+<div id="post-modal" class="modal"  >
 
   <!-- The Close Button -->
   <span class="close">&times;</span>
 
   <!-- Modal Content -->
-  <div class="modal-content">
+  <div class="modal-content" id="save-Comment" >
     <div style = "text-align: center !important;float: left;width: 60%;height: 100%">
       <img class="img-responsive" id="modal-picture"/>
     </div>
@@ -293,11 +296,37 @@ require_once ('includes/server.php')
           <div id='modal-caption'></div>
         </div>
       <div>
-      <br>
+      <br> 
       <hr style = "margin-left: -15px; margin-top: 50px; clear: both;"/>
+      <?php
+          
+
+          $query = "SELECT p.id AS 'post id', phc.comment_id AS 'comment id',
+                         c.content AS 'comment content', uac.username AS 'who add'
+                    FROM posts p, post_has_comments phc, comments c, user_add_comments uac
+                    WHERE p.id = phc.post_id AND phc.comment_id = c.id AND c.id = uac.comment_id
+                    ORDER BY p.id";
+
+          $result = mysqli_query($db, $query);
+          while($row = mysqli_fetch_array($result)){
+            // 23 is a hardcode post id to test the query
+            if (23 == $row[0]){
+              echo "<strong>";
+              echo $row[3];
+              echo "\n\n".":  ";
+              echo "</strong>";
+              echo $row[2];
+              echo "<br>";
+            }
+          }
+      ?>
       <form style = "position: absolute;bottom: 0px;left: 0px;right: 0px;">
-        <input type="text" style = "width:80%; height: 100%; float: left" placeholder="Add a comment...">
-        <button style = 'width: 20%; float: left;'>Post</button>
+        <input type="text" style = "width:80%; height: 100%; float: left" 
+        name ="comment-content" 
+        placeholder="Add a comment...">
+
+        <input type="hidden" value="" id="hidden-input-post-id" name="comment-value"/>
+        <button style = 'width: 20%; float: left;' type="submit" formmethod="post" name ="post-comment">Post</button>
       </form>
     <div>
   </div>
@@ -337,6 +366,7 @@ function showModal(post_image, caption, profile_pic, username){
     modalCaption.innerHTML = caption
     modalUsername.innerHTML = username;
 
+
     //user clicks on (x), close the modal
     document.getElementsByClassName('close')[0].onclick = function() {
       modalImg.src = ''
@@ -344,4 +374,5 @@ function showModal(post_image, caption, profile_pic, username){
       modal.style.display = 'none';
     }
 }
+
 </script>
