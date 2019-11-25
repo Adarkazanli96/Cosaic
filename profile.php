@@ -70,9 +70,9 @@ if(isset($_GET['profile_username'])){
             <img id ="profile_img">
                 <?php 
                     if($user_array['profile_img'] === null){ // if no profile pic in database
-                        echo '<img src="assets/images/default_profile.jpeg" height="250" width="250" />';
+                        echo '<img src="assets/images/default_profile.jpeg" height="250" width="250" style = "object-fit: cover;" />';
                     }else{
-                        echo '<img src="data:image/jpeg;base64,'.base64_encode($user_array['profile_img']).'" height="250" width="250" />';
+                        echo '<img src="data:image/jpeg;base64,'.base64_encode($user_array['profile_img']).'" height="250" width="250" style = "object-fit: cover;"/>';
                     }
                 ?>
 
@@ -161,7 +161,8 @@ if(isset($_GET['profile_username'])){
         echo "<div class='col-md-4 post'>
         
                 <img class='post-image' 
-                  src='data:image/jpg;base64,".base64_encode($post_image)."'height='250px' width='250px'/>
+                  src='data:image/jpg;base64,".base64_encode($post_image)."'height='250px' width='250px'
+                  style = 'object-fit: cover;'/>
                   
                 <p class='caption'>$caption</p>
                 

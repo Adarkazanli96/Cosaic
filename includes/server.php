@@ -160,7 +160,7 @@ if(isset($_POST['signup']) && $_SERVER['REQUEST_METHOD'] == "POST"){
     mysqli_query($db, $query);
     $_SESSION['username'] = $username;
     $_SESSION["first_name"] =  $first_name; 
-    $_SESSION["last_name"] = $last_name; 
+    $_SESSION["last_name"] = $last_name;
     signUp_profilePicture();
     header('location: index.php');
   }
@@ -208,11 +208,11 @@ if(isset($_POST['login']) && $_SERVER['REQUEST_METHOD'] == "POST"){
         
         
         if($row2[0] === null) { // if no profile pic in database
-          $profile_img = '<img src="assets/images/default_profile.jpeg" height="250" width="250" />';
+          $profile_img = '<img src="assets/images/default_profile.jpeg" height="250" width="250" style = "object-fit: cover;"/>';
           $_SESSION['profile_picture'] = $profile_img;
         } 
         else {
-          $_SESSION['profile_picture'] = '<img src="data:image/jpeg;base64,'.base64_encode($row2[0]).'" height="250" width="250" />';
+          $_SESSION['profile_picture'] = '<img src="data:image/jpeg;base64,'.base64_encode($row2[0]).'" height="250" width="250" style = "object-fit: cover;"/>';
         }
         header('location: index.php');
         }
@@ -241,7 +241,7 @@ if(isset($_POST['insert'])) {
     $result2 = mysqli_query($db, $query2);
     $row = mysqli_fetch_row($result2);
 
-    $_SESSION['profile_picture'] = '<img src="data:image/jpeg;base64,'.base64_encode($row[0]).'" height="250" width="250" />'; 
+    $_SESSION['profile_picture'] = '<img src="data:image/jpeg;base64,'.base64_encode($row[0]).'" height="250" width="250" style = "object-fit: cover;"/>'; 
     // echo '<script>alert("Image Inserted into Database")</script>';  
   }
   else {
@@ -263,7 +263,7 @@ if(isset($_POST['insert'])) {
 }
 
 function signUp_profilePicture(){
-  $profile_img = '<img src="assets/images/default_profile.jpeg" height="250" width="250" />';
+  $profile_img = '<img src="assets/images/default_profile.jpeg" height="250" width="250" style = "object-fit: cover;"/>';
   $_SESSION['profile_picture'] = $profile_img;
 }
 

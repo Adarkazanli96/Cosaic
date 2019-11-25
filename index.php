@@ -202,7 +202,7 @@ require_once ('includes/server.php')
         // $likes = $row["likes"]; 
         $timestamp = date("M j g:i A", strtotime($row["timestamp"])); 
         $caption = $row["caption"]; 
-        $caption = show_tags($caption);
+        $caption_with_tags = show_tags($caption);
         $post_image = $row["post_image"]; 
         
         // Checks if the post has already been liked by the user. 
@@ -241,13 +241,14 @@ require_once ('includes/server.php')
         
         echo "<div class='col-md-4 post'>
         
-                <img class='post-image comment-button'
+                <img class='post-image'
                 onclick='showModal(`" . base64_encode($post_image) . "`, `" . $caption . "`, `" . base64_encode($profile_pic) . "`, `" . $current_user . "`, `" . $post_id . "`)'
                 src='data:image/jpg;base64,".base64_encode($post_image)."'height='250px' width='250px' id = '$post_id'
+                style = 'object-fit: cover;'
                 />
                   
 
-                <p class='caption'>$caption</p>
+                <p class='caption'>$caption_with_tags</p>
                 
                 <form method='POST' style='margin-bottom: 0.5em; display: inline-block;'>
                   $like_count <input type='submit' value='    likes' class='$like_button_class' name='like-button-$post_id' $disabled/>

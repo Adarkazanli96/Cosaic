@@ -66,7 +66,7 @@ else{
             <ul class="nav navbar-nav navbar-right">
                 <li>
                     <a href="logout.php">Logout</a>
-                </li>f
+                </li>
             </ul>
             <form class="navbar-form navbar-left" role="search" action="search.php" method="GET" name="search_form">
                 <div class="form-group">
@@ -123,9 +123,9 @@ else{
                     <a href='profile.php?profile_username=" . $row['username'] . "'>
                         <div class = 'liveSearchProfilePic'>";
                         if($row['profile_img'] === null){ // render default pic
-                            echo "<img src='assets/images/default_profile.jpeg' alt='s' style='width: 60px;height:60px;border-radius: 50%;'/>";
+                            echo "<img src='assets/images/default_profile.jpeg' alt='s' style='width: 60px;height:60px;border-radius: 50%;object-fit:cover;'/>";
                         }else{
-                            echo "<img src='data:image/jpeg;base64,".base64_encode($row['profile_img'])."' alt='s' style='width: 60px;height:60px;border-radius: 50%;'/>";
+                            echo "<img src='data:image/jpeg;base64,".base64_encode($row['profile_img'])."' alt='s' style='width: 60px;height:60px;border-radius: 50%;object-fit:cover;'/>";
                         }
                         echo "</div>
                         " . $row['first_name'] . " " . $row['last_name'] . "

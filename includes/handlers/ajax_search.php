@@ -28,9 +28,9 @@ if($query != ""){
             <a href='profile.php?profile_username=" . $row['username'] . "' style='color: #1485BD'>
                 <div class = 'liveSearchProfilePic'>";
                 if($row['profile_img'] === null){ // render default pic
-                    echo "<img src='assets/images/default_profile.jpeg' alt='s' style='width: 60px;height:60px;border-radius: 50%;'/>";
+                    echo "<img src='assets/images/default_profile.jpeg' alt='s' style='width: 60px;height:60px;border-radius: 50%;object-fit:cover;'/>";
                 }else{
-                    echo "<img src='data:image/jpeg;base64,".base64_encode($row['profile_img'])."' alt='s' style='width: 60px;height:60px;border-radius: 50%;'/>";
+                    echo "<img src='data:image/jpeg;base64,".base64_encode($row['profile_img'])."' alt='s' style='width: 60px;height:60px;border-radius: 50%;object-fit:cover;'/>";
                 }
                 echo "</div>
                 <div class = 'liveSearchText'>
