@@ -134,7 +134,8 @@ body {font-family: 'Varela Round';}
 /* IMAGE POSTS */
 .post {
   margin-bottom: 2.5em;
-  max-width: 400px;
+  max-width: 250px;
+  margin-right: 150px;
 }
 
 .post .post-image {

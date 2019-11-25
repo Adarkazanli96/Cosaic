@@ -82,6 +82,7 @@ $user_add_likes_table = "CREATE TABLE IF NOT EXISTS `user_add_likes` (
 $comments_table = "CREATE TABLE IF NOT EXISTS `comments` (
   `id` INT(8) NOT NULL AUTO_INCREMENT,
   `timestamp` DATETIME NOT NULL,
+  `content` VARCHAR(1000) NULL,
   PRIMARY KEY (id)
 )";
 
@@ -351,4 +352,24 @@ while ($row = mysqli_fetch_row($result)) {
                        VALUES ('$post_id', '$like_id')"); 
   } 
 }
+//----------------------------------------------------------------------
+// ADDING COMMENTS
+//----------------------------------------------------------------------
+/*if(isset($_POST['post-comment']) && $_SERVER['REQUEST_METHOD'] == "POST"){
+  $input = mysqli_real_escape_string($db, $_POST['comment-content']);
+  $post_id = $_POST['hidden-input-post-id'];
+  $current_user = $_SESSION["username"];
+
+  $query = "INSERT INTO comments(id, timestamp, content) VALUES (NULL, NOW(), '$input')";
+  mysqli_query($db, $query);
+
+  // get the comment id
+  $comment_id = mysqli_insert_id($db);
+
+  $query = "INSERT INTO user_add_comments(comment_id, username) VALUES ('$comment_id', '$current_user')";
+  mysqli_query($db, $query);
+
+  $query = "INSERT INTO post_has_comments(post_id, comment_id) VALUES ('$post_id', '$comment_id')";
+  mysqli_query($db, $query);
+}*/
 ?>

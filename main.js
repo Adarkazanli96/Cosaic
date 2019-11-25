@@ -34,6 +34,16 @@ function getLiveSearchUsers(value){
     })
 }
 
+// jquery for getting comments dynamically
+function getComments(post_id){
+    //alert('getting comments from post: ' + post_id)
+    // ajax call
+    $.post("includes/handlers/ajax_get_comments.php", {query: post_id}, function(data){
+        // display the data from the callback
+        $('#comment-thread').html(data)
+     })
+}
+
 // Opens edit profile and create post popups. 
 function openEditProfileForm() {
     document.getElementById("edit-profile-form").style.display = "block";
@@ -51,12 +61,7 @@ function closeForms() {
 
 
 
-//Open modifyCaptionForm
-/**
-function modifyCaptionForm() {
-    document.getElementById("save-NewCaption").style.display = "block";
-}
-*/
+
 // Closes modifyCaptionForm
 function closeCaptionForm() {
     document.getElementById("closeCaptionForms").style.display = "none";
@@ -71,7 +76,6 @@ $(document).ready(function(){
             $('#hidden-input').val(id)
         })
     });
-
 })
 
 
@@ -95,3 +99,22 @@ $(document).ready(function(){
 
     });  
 });  
+
+
+// inserting a new comment
+$(document).ready(function(){
+
+    $('#comment-form').on('submit', function (e) {
+        e.preventDefault();
+        $.ajax({
+            type: 'post',
+            url: 'includes/handlers/ajax_insert_comment.php',
+            data: $('#comment-form').serialize(),
+            success: function (post_id) {
+                $('#comment-content').val(''); // clear input field
+                getComments(post_id); // get new comments upon successfully inserting comment
+            }
+        });
+    });
+        
+})

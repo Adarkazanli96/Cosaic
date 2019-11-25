@@ -18,7 +18,7 @@ require_once ('includes/server.php')
     <link rel="icon" href="./assets/images/cosaic_favicon.png">
     <link rel="stylesheet" type="text/css" href="./assets/css/styles.css" > 
     <link rel="stylesheet" type="text/css" href="./assets/css/profile.css"> 
-    <link rel="stylesheet" type="text/css" href="./assets/css/edit_post.css" >
+    <link rel="stylesheet" type="text/css" href="./assets/css/modal.css" >
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/css/bootstrap.min.css">
 
     <link rel="stylesheet" href="https://unpkg.com/purecss@1.0.1/build/pure-min.css" integrity="sha384-oAOxQR6DkCoMliIh8yFnu25d7Eq/PHS21PClpwjOTeU2jRSq11vu66rf90/cZr47" crossorigin="anonymous">
@@ -167,6 +167,13 @@ require_once ('includes/server.php')
     // DISPLAY POSTS
     //----------------------------------------------------------------------
       $current_user = $_SESSION["username"]; 
+
+      // get user information for modal
+      $result = $db -> query("SELECT profile_img FROM `users` WHERE username = '$current_user'");
+      $profile_pic = $result -> fetch_assoc();
+      $profile_pic = $profile_pic['profile_img'];
+
+      // get post informatiion for displaying posts
       $result = $db -> query("SELECT id 
                               FROM `create` 
                               WHERE username = '$current_user'
@@ -190,7 +197,8 @@ require_once ('includes/server.php')
         
         $row = $result -> fetch_assoc(); 
         
-        $post_id = $row["id"]; 
+        $post_id = $row["id"];
+
         // $likes = $row["likes"]; 
         $timestamp = date("M j g:i A", strtotime($row["timestamp"])); 
         $caption = $row["caption"]; 
@@ -230,11 +238,15 @@ require_once ('includes/server.php')
         // Retrieves the number of likes the post has. 
         $fetch_likes = mysqli_query($db, "SELECT COUNT(*) FROM `post_has_likes` WHERE post_id = $post_id"); 
         $like_count = mysqli_fetch_row($fetch_likes)[0]; 
-
+        
         echo "<div class='col-md-4 post'>
-                <img class='post-image' 
-                  src='data:image/jpg;base64,".base64_encode($post_image)."'height='250px' width='250px'/>
+        
+                <img class='post-image comment-button'
+                onclick='showModal(`" . base64_encode($post_image) . "`, `" . $caption . "`, `" . base64_encode($profile_pic) . "`, `" . $current_user . "`, `" . $post_id . "`)'
+                src='data:image/jpg;base64,".base64_encode($post_image)."'height='250px' width='250px' id = '$post_id'
+                />
                   
+
                 <p class='caption'>$caption</p>
                 
                 <form method='POST' style='margin-bottom: 0.5em; display: inline-block;'>
@@ -244,12 +256,11 @@ require_once ('includes/server.php')
                 <button class='fa fa-edit post-button' id = '$post_id' style='float: right;'> Edit </button>
                 
                 <p class='timestamp'>$timestamp</p>
-                
   
                 
                 </div>";  
         }
-      echo "  </div>
+      echo "  <div>
             </div>"; 
 
        
@@ -267,8 +278,44 @@ require_once ('includes/server.php')
     </form>
 </div>
 
+<!-- The modal for selecting a post -->
+<div id="modal" class="modal"  >
 
-  </body>
+  <!-- The Close Button -->
+  <span class="close">&times;</span>
+
+  <!-- Modal Content -->
+  <div class="modal-content">
+    <div style = "text-align: center !important;float: left;width: 60%;height: 100%">
+      <img class="img-responsive" id="modal-picture"/>
+    </div>
+    <div class = "modal-description">
+      <div style = 'overflow-y: auto; height: 90%'>
+        <div style = "margin-top: 15px; margin-left: 15px;">
+          <img id = 'modal-profile-pic' alt='s'/>
+          <div style = 'position: relative; left: 15px; float: left; width: 200px;'>
+            <strong id = "modal-username"></strong>
+            <div id='modal-caption'></div>
+          </div>
+          <div style = 'clear: both;'></div>
+        </div>
+        <br> 
+        <hr style = "margin-top: 35px;"/>
+        <div id="comment-thread"></div>
+      </div>
+      <form id = 'comment-form'>
+        <div style="border-top: 1px solid lightgrey">
+          <input id = 'comment-content' type="text" name ="comment-content" placeholder="Add a comment...">
+          <input type="hidden" value="" id="hidden-input-post-id" name="hidden-input-post-id"/>
+          <button type="submit" formmethod="post" name ="post-comment">Post</button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
+
+
+</body>
 </html>
 
 <?php function show_tags($str){
@@ -286,3 +333,32 @@ require_once ('includes/server.php')
   }
   return $result;
 }?>
+
+<script>
+function showModal(post_image, caption, profile_pic, username, post_id){
+    var modal = document.getElementById('modal');
+    var modalImg = document.getElementById('modal-picture');
+    var modalCaption = document.getElementById('modal-caption')
+    var profilePicture = document.getElementById('modal-profile-pic')
+    var modalUsername = document.getElementById('modal-username')
+
+    modal.style.display = 'block';
+    modalImg.src = `data:image/jpg;base64, ${post_image}`;
+    profilePicture.src = `data:image/jpg;base64, ${profile_pic}`;
+    modalCaption.innerHTML = caption
+    modalUsername.innerHTML = username;
+
+    // AJAX call to get all comments of post
+    getComments(post_id);
+
+    $('#hidden-input-post-id').val(post_id) // set the hidden post id in the form
+
+    //user clicks on (x), close the modal
+    document.getElementsByClassName('close')[0].onclick = function() {
+      modalImg.src = ''
+      modalCaption.innerHTML = ''
+      modal.style.display = 'none';
+    }
+}
+
+</script>
