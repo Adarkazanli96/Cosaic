@@ -188,7 +188,7 @@ require_once ('includes/server.php')
       }
       
       echo "<div class='container'>
-              <div class='row' style='width: 60em'>"; 
+              </div class='row' style='width: 60em'>"; 
       
       // Iterates through every post the user has posted. 
       foreach ($current_user_posts as $post_id) {
@@ -242,7 +242,7 @@ require_once ('includes/server.php')
         echo "<div class='col-md-4 post'>
         
                 <img class='post-image comment-button'
-                onclick='showModal(`" . base64_encode($post_image) . "`, `" . $caption . "`, `" . base64_encode($profile_pic) . "`, `" . $current_user . "`)'
+                onclick='showModal(`" . base64_encode($post_image) . "`, `" . $caption . "`, `" . base64_encode($profile_pic) . "`, `" . $current_user . "`, `" . $post_id . "`)'
                 src='data:image/jpg;base64,".base64_encode($post_image)."'height='250px' width='250px' id = '$post_id'
                 />
                   
@@ -258,7 +258,7 @@ require_once ('includes/server.php')
                 <button class='fa fa-edit post-button' id = '$post_id'> Edit </button>
                 </div>";  
         }
-      echo "  </div>
+      echo "  <div>
             </div>"; 
 
        
@@ -277,63 +277,44 @@ require_once ('includes/server.php')
     </form>
 </div>
 
-<!-- The Post modal -->
-<div id="post-modal" class="modal"  >
+<!-- The modal for selecting a post -->
+<div id="modal" class="modal"  >
 
   <!-- The Close Button -->
   <span class="close">&times;</span>
 
   <!-- Modal Content -->
-  <div class="modal-content" id="save-Comment" >
+  <div class="modal-content">
     <div style = "text-align: center !important;float: left;width: 60%;height: 100%">
       <img class="img-responsive" id="modal-picture"/>
     </div>
     <div class = "modal-description">
-      <div style = "margin-top: 15px; margin-left: 15px;">
-        <img id = 'modal-profile-pic' alt='s' style = 'float: left'/>
-        <div style = 'display:block;float:left;margin-left:15px;margin-top:5px'>
-          <div id = "modal-username" style = 'font-weight:bold;'></div>
-          <div id='modal-caption'></div>
+      <div style = 'overflow-y: auto; height: 90%'>
+        <div style = "margin-top: 15px; margin-left: 15px;">
+          <img id = 'modal-profile-pic' alt='s' style = 'float: left'/>
+          <div style = 'display:block;float:left;margin-left:15px;margin-top:5px'>
+            <div id = "modal-username" style = 'font-weight:bold;'></div>
+            <div id='modal-caption'></div>
+          </div>
         </div>
-      <div>
-      <br> 
-      <hr style = "margin-left: -15px; margin-top: 50px; clear: both;"/>
-      <?php
-          
-
-          $query = "SELECT p.id AS 'post id', phc.comment_id AS 'comment id',
-                         c.content AS 'comment content', uac.username AS 'who add'
-                    FROM posts p, post_has_comments phc, comments c, user_add_comments uac
-                    WHERE p.id = phc.post_id AND phc.comment_id = c.id AND c.id = uac.comment_id
-                    ORDER BY p.id";
-
-          $result = mysqli_query($db, $query);
-          while($row = mysqli_fetch_array($result)){
-            // 23 is a hardcode post id to test the query
-            if (23 == $row[0]){
-              echo "<strong>";
-              echo $row[3];
-              echo "\n\n".":  ";
-              echo "</strong>";
-              echo $row[2];
-              echo "<br>";
-            }
-          }
-      ?>
-      <form style = "position: absolute;bottom: 0px;left: 0px;right: 0px;">
-        <input type="text" style = "width:80%; height: 100%; float: left" 
+        <br> 
+        <hr style = "margin-top: 50px;"/>
+        <div id="comment-thread"></div>
+      </div>
+      <form id = 'comment-form' style = "position: absolute;bottom: 0px;left: 0px;right: 0px; height: 10%;">
+        <input id = 'comment-content' type="text" style = "width:80%; height: 100%; float: left"
         name ="comment-content" 
         placeholder="Add a comment...">
 
-        <input type="hidden" value="" id="hidden-input-post-id" name="comment-value"/>
-        <button style = 'width: 20%; float: left;' type="submit" formmethod="post" name ="post-comment">Post</button>
+        <input type="hidden" value="" id="hidden-input-post-id" name="hidden-input-post-id"/>
+        <button style = 'width: 20%; height: 100%; float: left;' type="submit" formmethod="post" name ="post-comment">Post</button>
       </form>
-    <div>
+    </div>
   </div>
 </div>
 
 
-  </body>
+</body>
 </html>
 
 <?php function show_tags($str){
@@ -353,8 +334,8 @@ require_once ('includes/server.php')
 }?>
 
 <script>
-function showModal(post_image, caption, profile_pic, username){
-    var modal = document.getElementById('post-modal');
+function showModal(post_image, caption, profile_pic, username, post_id){
+    var modal = document.getElementById('modal');
     var modalImg = document.getElementById('modal-picture');
     var modalCaption = document.getElementById('modal-caption')
     var profilePicture = document.getElementById('modal-profile-pic')
@@ -366,6 +347,10 @@ function showModal(post_image, caption, profile_pic, username){
     modalCaption.innerHTML = caption
     modalUsername.innerHTML = username;
 
+    // AJAX call to get all comments of post
+    getComments(post_id);
+
+    $('#hidden-input-post-id').val(post_id) // set the hidden post id in the form
 
     //user clicks on (x), close the modal
     document.getElementsByClassName('close')[0].onclick = function() {

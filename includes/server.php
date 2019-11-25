@@ -349,24 +349,21 @@ while ($row = mysqli_fetch_row($result)) {
 //----------------------------------------------------------------------
 // ADDING COMMENTS
 //----------------------------------------------------------------------
-if(isset($_POST['post-comment']) && $_SERVER['REQUEST_METHOD'] == "POST"){
-  $value = mysqli_real_escape_string($db, $_POST['comment-content']);
-  $query = "INSERT INTO comments(timestamp, content) VALUES (NOW(), '$value')";
+/*if(isset($_POST['post-comment']) && $_SERVER['REQUEST_METHOD'] == "POST"){
+  $input = mysqli_real_escape_string($db, $_POST['comment-content']);
+  $post_id = $_POST['hidden-input-post-id'];
+  $current_user = $_SESSION["username"];
+
+  $query = "INSERT INTO comments(id, timestamp, content) VALUES (NULL, NOW(), '$input')";
   mysqli_query($db, $query);
 
-  $query2 = "SELECT id FROM comments WHERE content ='$value'";
-  $result = mysqli_fetch_row(mysqli_query($db, $query2));
+  // get the comment id
+  $comment_id = mysqli_insert_id($db);
 
-  $user = $_SESSION['username'];
-  $query3 = "INSERT INTO user_add_comments(comment_id, username) VALUES ('$result[0]', '$user')";
-  mysqli_query($db, $query3);
+  $query = "INSERT INTO user_add_comments(comment_id, username) VALUES ('$comment_id', '$current_user')";
+  mysqli_query($db, $query);
 
-  $temp= $_POST['comment-value'];
-
-  $query4 = "INSERT INTO post_has_comments(post_id, comment_id) VALUES ('$temp', '$result[0]')";
-  mysqli_query($db, $query4);
-}
-
-
-
+  $query = "INSERT INTO post_has_comments(post_id, comment_id) VALUES ('$post_id', '$comment_id')";
+  mysqli_query($db, $query);
+}*/
 ?>
