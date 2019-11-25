@@ -291,23 +291,23 @@ require_once ('includes/server.php')
     <div class = "modal-description">
       <div style = 'overflow-y: auto; height: 90%'>
         <div style = "margin-top: 15px; margin-left: 15px;">
-          <img id = 'modal-profile-pic' alt='s' style = 'float: left'/>
-          <div style = 'display:block;float:left;margin-left:15px;margin-top:5px'>
-            <div id = "modal-username" style = 'font-weight:bold;'></div>
+          <img id = 'modal-profile-pic' alt='s'/>
+          <div style = 'position: relative; left: 15px; float: left; width: 200px;'>
+            <strong id = "modal-username"></strong>
             <div id='modal-caption'></div>
           </div>
+          <div style = 'clear: both;'></div>
         </div>
         <br> 
-        <hr style = "margin-top: 50px;"/>
+        <hr style = "margin-top: 35px;"/>
         <div id="comment-thread"></div>
       </div>
-      <form id = 'comment-form' style = "position: absolute;bottom: 0px;left: 0px;right: 0px; height: 10%;">
-        <input id = 'comment-content' type="text" style = "width:80%; height: 100%; float: left"
-        name ="comment-content" 
-        placeholder="Add a comment...">
-
-        <input type="hidden" value="" id="hidden-input-post-id" name="hidden-input-post-id"/>
-        <button style = 'width: 20%; height: 100%; float: left;' type="submit" formmethod="post" name ="post-comment">Post</button>
+      <form id = 'comment-form'>
+        <div style="border-top: 1px solid lightgrey">
+          <input id = 'comment-content' type="text" name ="comment-content" placeholder="Add a comment...">
+          <input type="hidden" value="" id="hidden-input-post-id" name="hidden-input-post-id"/>
+          <button type="submit" formmethod="post" name ="post-comment">Post</button>
+        </div>
       </form>
     </div>
   </div>
