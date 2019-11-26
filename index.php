@@ -294,14 +294,14 @@ require_once ('includes/server.php')
       <div style = 'overflow-y: auto; height: 90%'>
         <div style = "margin-top: 15px; margin-left: 15px;">
           <img id = 'modal-profile-pic' alt='s'/>
-          <div style = 'position: relative; left: 15px; float: left; width: 200px;'>
+          <div style = 'position: relative; left: 15px; float: left; width: 200px;word-wrap: break-word;'>
             <strong id = "modal-username"></strong>
             <div id='modal-caption'></div>
           </div>
           <div style = 'clear: both;'></div>
         </div>
         <br> 
-        <hr style = "margin-top: 35px;"/>
+        <hr/>
         <div id="comment-thread"></div>
       </div>
       <form id = 'comment-form'>
@@ -345,7 +345,10 @@ function showModal(post_image, caption, profile_pic, username, post_id){
 
     modal.style.display = 'block';
     modalImg.src = `data:image/jpg;base64, ${post_image}`;
-    profilePicture.src = `data:image/jpg;base64, ${profile_pic}`;
+    if(profile_pic === "") profilePicture.src = "assets/images/default_profile.jpeg"
+    else{
+      profilePicture.src = `data:image/jpg;base64, ${profile_pic}`;
+    }
     modalCaption.innerHTML = caption
     modalUsername.innerHTML = username;
 

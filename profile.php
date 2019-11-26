@@ -24,6 +24,7 @@ if(isset($_GET['profile_username'])){
     <link rel="icon" href="./assets/images/cosaic_favicon.png">
     <link rel="stylesheet" type="text/css" href="./assets/css/styles.css" > 
     <link rel="stylesheet" type="text/css" href="./assets/css/profile.css" > 
+    <link rel="stylesheet" type="text/css" href="./assets/css/modal.css" >
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/css/bootstrap.min.css">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/js/bootstrap.min.js"></script>
@@ -95,6 +96,13 @@ if(isset($_GET['profile_username'])){
       // DISPLAY POSTS
       //----------------------------------------------------------------------
       $current_user = $user_array['username']; 
+
+      // get user information for modal
+      $result = $db -> query("SELECT profile_img FROM `users` WHERE username = '$current_user'");
+      $profile_pic = $result -> fetch_assoc();
+      $profile_pic = $profile_pic['profile_img'];
+
+      //get post information for displaying posts
       $result = $db -> query("SELECT id 
                               FROM `create` 
                               WHERE username = '$current_user'
@@ -121,8 +129,8 @@ if(isset($_GET['profile_username'])){
         // $likes = $row["likes"]; 
         $timestamp = date("M j, g:i A", strtotime($row["timestamp"])); 
         $caption = $row["caption"]; 
-        $caption = show_tags($caption);
-        $post_image = $row["post_image"]; 
+        $caption_with_tags = show_tags($caption);
+        $post_image = $row["post_image"];
         
         // Checks if the post has already been liked by the user. 
         $result = mysqli_query($db, "SELECT like_id
@@ -160,11 +168,12 @@ if(isset($_GET['profile_username'])){
 
         echo "<div class='col-md-4 post'>
         
-                <img class='post-image' 
+                <img class='post-image'
+                  onclick='showModal(`" . base64_encode($post_image) . "`, `" . $caption . "`, `" . base64_encode($profile_pic) . "`, `" . $current_user . "`, `" . $post_id . "`)'
                   src='data:image/jpg;base64,".base64_encode($post_image)."'height='250px' width='250px'
                   style = 'object-fit: cover;'/>
                   
-                <p class='caption'>$caption</p>
+                <p class='caption'>$caption_with_tags</p>
                 
                 <form method='POST' style='margin-bottom: 0.5em;'>
                   $like_count <input type='submit' value='    likes' class='$like_button_class' name='like-button-$post_id' $disabled/>
@@ -177,6 +186,43 @@ if(isset($_GET['profile_username'])){
       echo "  </div>
             </div>"; 
     ?>
+
+
+    <!-- The modal for selecting a post -->
+<div id="modal" class="modal"  >
+
+<!-- The Close Button -->
+<span class="close">&times;</span>
+
+<!-- Modal Content -->
+<div class="modal-content">
+  <div style = "text-align: center !important;float: left;width: 60%;height: 100%">
+    <img class="img-responsive" id="modal-picture"/>
+  </div>
+  <div class = "modal-description">
+    <div style = 'overflow-y: auto; height: 90%'>
+      <div style = "margin-top: 15px; margin-left: 15px;">
+        <img id = 'modal-profile-pic' alt='s'/>
+        <div style = 'position: relative; left: 15px; float: left; width: 200px;word-wrap: break-word;'>
+          <strong id = "modal-username"></strong>
+          <div id='modal-caption'></div>
+        </div>
+        <div style = 'clear: both;'></div>
+      </div>
+      <br> 
+      <hr/>
+      <div id="comment-thread"></div>
+    </div>
+    <form id = 'comment-form'>
+      <div style="border-top: 1px solid lightgrey">
+        <input id = 'comment-content' type="text" name ="comment-content" placeholder="Add a comment...">
+        <input type="hidden" value="" id="hidden-input-post-id" name="hidden-input-post-id"/>
+        <button type="submit" formmethod="post" name ="post-comment">Post</button>
+      </div>
+    </form>
+  </div>
+</div>
+</div>
   </body>
 </html>
 
@@ -195,3 +241,35 @@ if(isset($_GET['profile_username'])){
   }
   return $result;
 }?>
+
+<script>
+function showModal(post_image, caption, profile_pic, username, post_id){
+    var modal = document.getElementById('modal');
+    var modalImg = document.getElementById('modal-picture');
+    var modalCaption = document.getElementById('modal-caption')
+    var profilePicture = document.getElementById('modal-profile-pic')
+    var modalUsername = document.getElementById('modal-username')
+
+    modal.style.display = 'block';
+    modalImg.src = `data:image/jpg;base64, ${post_image}`;
+    if(profile_pic === "") profilePicture.src = "assets/images/default_profile.jpeg"
+    else{
+      profilePicture.src = `data:image/jpg;base64, ${profile_pic}`;
+    }
+    modalCaption.innerHTML = caption
+    modalUsername.innerHTML = username;
+
+    // AJAX call to get all comments of post
+    getComments(post_id);
+
+    $('#hidden-input-post-id').val(post_id) // set the hidden post id in the form
+
+    //user clicks on (x), close the modal
+    document.getElementsByClassName('close')[0].onclick = function() {
+      modalImg.src = ''
+      modalCaption.innerHTML = ''
+      modal.style.display = 'none';
+    }
+}
+
+</script>

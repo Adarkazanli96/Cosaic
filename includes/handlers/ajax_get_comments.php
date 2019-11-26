@@ -13,11 +13,15 @@ $result = mysqli_query($db, $query);
 while($row = mysqli_fetch_array($result)){
     if ($post_id == $row[0]){
         $timestamp = date("M j, g:i A", strtotime($row[4]));
-        $profile_img = base64_encode($row[5]);
+        if($row[5] === null) $profile_img_src = "assets/images/default_profile.jpeg"; // if user does not have a profile picture set up, use default
+        else {
+            $profile_img_src = 'data:image/jpg;base64, ' . base64_encode($row[5]);
+        }
+        
         echo "
         <div style = 'margin-left: 15px;'>
-            <img class = 'comment-profile-pic' alt='s' src = 'data:image/jpg;base64, ${profile_img}'/>
-            <div style = 'position: relative; left: 15px; float: left; width: 200px;'>
+            <img class = 'comment-profile-pic' alt='s' src = '${profile_img_src}'/>
+            <div style = 'position: relative; left: 15px; float: left; width: 200px;word-wrap: break-word;'>
                 <strong>" . $row[3] . "</strong>
                 <div>" . $row[2] . "</div>
                 <div class='timestamp'>$timestamp</div>
