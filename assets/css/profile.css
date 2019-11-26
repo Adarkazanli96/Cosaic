@@ -42,20 +42,28 @@ body {font-family: 'Varela Round';}
 }
 
 .form-popup-profile {
-  display: none;
+  /*display: none;
   position: absolute;
   border: 3px solid #f1f1f1;
   top: 20px;
-  right: 220px;
+  right: 220px;*/
 }
 
 .form-popup-modify-post {
-  display: none;
+  /*display: none;
   position: absolute;
   border: 3px solid #f1f1f1;
   margin: 0;
   top: 200px;
   left: 60%;
+  width: 300px;*/
+  display: none;
+  border: 3px solid #f1f1f1;
+  position: fixed;
+  left: 50%;
+  top: 50%; 
+  margin-left: -150px;
+  margin-top: -150px;
 }
 
 /* Add styles to the form container */
@@ -106,16 +114,16 @@ body {font-family: 'Varela Round';}
 }
 
 #profile-username {
-  font-size: 3em; 
-  font-weight: bold; 
-  margin-bottom: 0.25em; 
-}
-
-#profile-name {
   display: inline; 
   font-weight: bold; 
   font-size: 1.2em; 
   margin-bottom: 0px; 
+}
+
+#profile-name {
+  font-size: 3em; 
+  font-weight: bold; 
+  margin-bottom: 0.25em;
 }
 
 #profile-description {
@@ -128,8 +136,16 @@ body {font-family: 'Varela Round';}
 }
 
 .edit-profile-popup {
-  padding-top: 8em;
-  border: none; 
+  /*padding-top: 8em;
+  border: none; */
+  display: none;
+  border: 3px solid #f1f1f1;
+  position: absolute;
+  left: 50%;
+  top: 300px; 
+  margin-left: -150px;
+  margin-top: -150px;
+
 }
 
 /* IMAGE POSTS */

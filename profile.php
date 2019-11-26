@@ -79,8 +79,8 @@ if(isset($_GET['profile_username'])){
 
             </img>
             <div id ="user_infor">
-              <p id ="profile-username" ><?php echo $user_array['username'];?></p>
               <p id='profile-name'><?php echo $user_array['first_name'] . " " . $user_array['last_name'];?></p> 
+              <p id ="profile-username" ><?php echo $user_array['username'];?></p>
               <p id ="profile-description" ><?php echo $user_array['description']; ?></p>
             </div>
         </div>

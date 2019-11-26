@@ -93,9 +93,7 @@ require_once ('includes/server.php')
                 ?>
                 
             </img>
-            <div id ="user_infor">
-              <p id ="profile-username" ><?php echo $_SESSION['username']; ?></p>
-      
+            <div id ="user_infor">      
               <?php 
                 $username = $_SESSION['username']; 
                 $first_name = $_SESSION['first_name']; 
@@ -104,7 +102,9 @@ require_once ('includes/server.php')
 //                $result = mysqli_query($db, "SELECT COUNT(*) FROM `create` WHERE username = '$username'"); 
 //                $total_posts = mysqli_fetch_row($result)[0];     
       
-                echo "<p id='profile-name'>$first_name $last_name</p>";   
+                echo "<p id='profile-name'>$first_name $last_name</p>";
+                echo  "<p id ='profile-username' >" . $_SESSION['username'] . "</p>";
+  
               ?>
       
             <p id ="profile-description" >
@@ -139,29 +139,6 @@ require_once ('includes/server.php')
     </div>
       
     <?php
-    
-    //UPDATE CAPTION
-    if (isset($_POST["update-post-caption"]) && !empty($_POST['update-post-caption'] )) {
-
-      $temp = $_POST["test"];
-      $new_caption = mysqli_real_escape_string($db, $_POST['update-post']);
-      $query1 = "UPDATE posts 
-                SET caption = '$new_caption'
-                WHERE  id = '$temp'";
-      $result = mysqli_query($db, $query1);
-      
-    }
-    //DELETE CAPTION
-    if (isset($_POST["delete_post"]) && !empty($_POST['delete_post'])){
-      $temp = $_POST["test"];
-      $query1 = "DELETE FROM `create`
-                 WHERE `id` = '$temp'";
-      $result = mysqli_query($db, $query1);
-      $query2 = "DELETE FROM `posts`
-                 WHERE `id` = '$temp'";
-      $result2 = mysqli_query($db, $query2);
-      
-    }
 
     //----------------------------------------------------------------------
     // DISPLAY POSTS
