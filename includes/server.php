@@ -363,8 +363,17 @@ while ($row = mysqli_fetch_row($result)) {
                 SET caption = '$new_caption'
                 WHERE  id = '$temp'";
       $result = mysqli_query($db, $query1);
+
+      // UPDATE TAGGED_IN TABLE FOR EACH TAG
+      $db -> query("DELETE FROM `tagged_in` WHERE id = '$temp'"); // delete all tags first
+      $tagged_users = get_tagged_users($new_caption);
+      foreach($tagged_users as $tagged_user){
+        $db -> query("INSERT INTO `tagged_in` (`username`, `id`) VALUES ('$tagged_user', '$temp')"); // insert new tags
+      }
+
       header('location: index.php');
     }
+
     //DELETE CAPTION
     if (isset($_POST["delete_post"]) && !empty($_POST['delete_post'])){
       $temp = $_POST["test"];
