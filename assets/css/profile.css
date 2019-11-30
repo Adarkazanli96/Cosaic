@@ -21,7 +21,6 @@ body {font-family: 'Varela Round';}
   margin-right: 3%;
 }
 
-
 .logout-button-text {
   color: #000000;
   
@@ -128,6 +127,14 @@ body {font-family: 'Varela Round';}
 
 #profile-description {
   font-size: 1em; 
+  padding-top: 0.5em; 
+  width: 40em; 
+}
+
+#profile-posts-and-likes {
+  display: inline; 
+  font-size: 1em;
+  padding-left: 1em; 
 }
 
 #user_infor{
@@ -136,8 +143,6 @@ body {font-family: 'Varela Round';}
 }
 
 .edit-profile-popup {
-  /*padding-top: 8em;
-  border: none; */
   display: none;
   border: 3px solid #f1f1f1;
   position: absolute;

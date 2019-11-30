@@ -25,7 +25,7 @@
       Our mission is to bring people together by fostering communities around the things that they love. 
       We hope that Cosiac will both inspire your creativity and help share that inspiration with the world.</p>
       
-      <p>Revision: 22 November, 2019</p>
+      <p>Revision: 3 December, 2019</p>
       <p>Created by Ahmed Darkazanli, Albert Ong, and Anh Phan</p>
       <p>Github repository can be found <a href="https://github.com/CS-157A-Team-38/CS157A-Team-38" target="_blank">here</a></p>
     </div>

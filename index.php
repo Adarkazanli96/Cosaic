@@ -99,12 +99,19 @@ require_once ('includes/server.php')
                 $first_name = $_SESSION['first_name']; 
                 $last_name = $_SESSION['last_name']; 
       
-//                $result = mysqli_query($db, "SELECT COUNT(*) FROM `create` WHERE username = '$username'"); 
-//                $total_posts = mysqli_fetch_row($result)[0];     
+                $result = mysqli_query($db, "SELECT COUNT(*) FROM `create` WHERE username = '$username'"); 
+                $total_posts = mysqli_fetch_row($result)[0];  
+              
+                $result = mysqli_query($db, "SELECT COUNT(*) FROM `user_add_likes` WHERE username = '$username'"); 
+                $total_likes = mysqli_fetch_row($result)[0];    
       
+                $posts_text = ($total_posts == 1 ? "post" : "posts");
+                $likes_text = ($total_likes == 1 ? "like" : "likes");
+              
                 echo "<p id='profile-name'>$first_name $last_name</p>";
-                echo  "<p id ='profile-username' >" . $_SESSION['username'] . "</p>";
-  
+                echo  "<p id ='profile-username' >" . $_SESSION['username'] . "</p>
+                       <p id='profile-posts-and-likes'>$total_posts $posts_text</p>
+                       <p id='profile-posts-and-likes'>$total_likes $likes_text</p>";
               ?>
       
             <p id ="profile-description" >
@@ -176,10 +183,12 @@ require_once ('includes/server.php')
         
         $post_id = $row["id"];
 
-        // $likes = $row["likes"]; 
         $timestamp = date("M j g:i A", strtotime($row["timestamp"])); 
+        
+        // Formats the caption to include tags. 
         $caption = $row["caption"]; 
         $caption_with_tags = show_tags($caption);
+        
         $post_image = $row["post_image"]; 
         
         // Checks if the post has already been liked by the user. 
@@ -222,8 +231,7 @@ require_once ('includes/server.php')
                 onclick='showModal(`" . base64_encode($post_image) . "`, `" . $caption . "`, `" . base64_encode($profile_pic) . "`, `" . $current_user . "`, `" . $post_id . "`)'
                 src='data:image/jpg;base64,".base64_encode($post_image)."'height='250px' width='250px' id = '$post_id'
                 style = 'object-fit: cover;'
-                />
-                  
+                /> 
 
                 <p class='caption'>$caption_with_tags</p>
                 
@@ -234,8 +242,7 @@ require_once ('includes/server.php')
                 <button class='fa fa-edit post-button' id = '$post_id' style='float: right;'> Edit </button>
                 
                 <p class='timestamp'>$timestamp</p>
-  
-                
+
                 </div>";  
         }
       echo "  <div>

@@ -72,15 +72,31 @@ if(isset($_GET['profile_username'])){
                 <?php 
                     if($user_array['profile_img'] === null){ // if no profile pic in database
                         echo '<img src="assets/images/default_profile.jpeg" height="250" width="250" style = "object-fit: cover;" />';
-                    }else{
+                    } else{
                         echo '<img src="data:image/jpeg;base64,'.base64_encode($user_array['profile_img']).'" height="250" width="250" style = "object-fit: cover;"/>';
                     }
                 ?>
 
             </img>
+      
+            <?php
+                $username = $user_array['username']; 
+              
+                $result = mysqli_query($db, "SELECT COUNT(*) FROM `create` WHERE username = '$username'"); 
+                $total_posts = mysqli_fetch_row($result)[0];  
+              
+                $result = mysqli_query($db, "SELECT COUNT(*) FROM `user_add_likes` WHERE username = '$username'"); 
+                $total_likes = mysqli_fetch_row($result)[0];    
+      
+                $posts_text = ($total_posts == 1 ? "post" : "posts");
+                $likes_text = ($total_likes == 1 ? "like" : "likes");
+            ?>
+      
             <div id ="user_infor">
               <p id='profile-name'><?php echo $user_array['first_name'] . " " . $user_array['last_name'];?></p> 
               <p id ="profile-username" ><?php echo $user_array['username'];?></p>
+              <p id='profile-posts-and-likes'><?php echo $total_posts . " " . $posts_text; ?></p>
+              <p id='profile-posts-and-likes'><?php echo $total_likes . " " . $likes_text; ?></p>
               <p id ="profile-description" ><?php echo $user_array['description']; ?></p>
             </div>
         </div>
