@@ -102,11 +102,7 @@ require_once ('includes/server.php')
                 $result = mysqli_query($db, "SELECT COUNT(*) FROM `create` WHERE username = '$username'"); 
                 $total_posts = mysqli_fetch_row($result)[0];  
               
-                $result = mysqli_query($db, "SELECT COUNT(*) FROM `user_add_likes` WHERE username = '$username'"); 
-                $total_likes = mysqli_fetch_row($result)[0];    
-      
                 $posts_text = ($total_posts == 1 ? "post" : "posts");
-                $likes_text = ($total_likes == 1 ? "like" : "likes");
               
                 echo "<p id='profile-name'>$first_name $last_name</p>";
                 echo  "<p id ='profile-username' >" . $_SESSION['username'] . "</p>

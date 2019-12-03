@@ -279,12 +279,12 @@ if (isset($_POST["create-post"])) {
 	  // Retrieves the image file and caption. 
 	  $file = addslashes(file_get_contents($_FILES["create-post-image"]["tmp_name"]));
     $caption = $_POST["create-post-caption"]; 
-    $tagged_users = get_tagged_users($caption);
 		
 	  // INSERT INTO POSTS TABLE
-	  $query = "INSERT INTO posts(timestamp, caption, post_image) 
+	  $query = "INSERT INTO `posts` (`timestamp`, `caption`, `post_image`) 
 		        VALUES (NOW(), '$caption', '$file')"; 
-	  $db -> query($query); 
+    mysqli_query($db, $query);
+  
       
       // Retrieves the username of the current user
       $username = $_SESSION["username"]; 
@@ -295,13 +295,15 @@ if (isset($_POST["create-post"])) {
       $post_id = $last_post[0]; 
       
       // INSERT INTO CREATE TABLE
-      $db -> query("INSERT INTO `create` (`username`, `id`) VALUES ('$username', '$post_id')"); 
       // echo "Username: $username<br> ID: $post_id <br>"; 
+      mysqli_query($db, "INSERT INTO `create` (`username`, `id`) VALUES ('$username', '$post_id')");
 
+      $tagged_users = get_tagged_users($caption);
       // INSERT INTO TAGGED_IN TABLE
       foreach($tagged_users as $tagged_user){
         $db -> query("INSERT INTO `tagged_in` (`username`, `id`) VALUES ('$tagged_user', '$post_id')"); 
       }
+
       $_POST = array();
       header('location: index.php');
 	}
