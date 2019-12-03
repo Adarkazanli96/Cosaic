@@ -135,12 +135,12 @@ require_once ('includes/server.php')
         <form class="form-container" method="post" enctype="multipart/form-data">
 
             <label>Image</label>
-            <input type="file" name="post-image" id="post-image" accept="image/*"/>  
+            <input type="file" name="create-post-image" id="create-post-image" accept="image/*"/>  
 
             <label>Caption</label>
-            <input type="text" name ="post-caption" placeholder="Insert caption" autocomplete = "off">
+            <input type="text" name ="create-post-caption" placeholder="Insert caption" autocomplete = "off">
 
-            <input type="submit" name="create-post" id="create-post" value="Post" class="btn btn-info" /> 
+            <button type="submit" name="create-post" id="create-post" class="btn btn-info">Post</button>
             <button type="button" class="btn cancel" onclick="closeForms()">Close</button>
         </form>
     </div>

@@ -274,11 +274,11 @@ function signUp_profilePicture(){
 if (isset($_POST["create-post"])) {
 
 	// Only uploads if a file exists. 
-	if (file_exists($_FILES["post-image"]["tmp_name"])) {
+	if (file_exists($_FILES["create-post-image"]["tmp_name"])) {
 		
 	  // Retrieves the image file and caption. 
-	  $file = addslashes(file_get_contents($_FILES["post-image"]["tmp_name"]));
-    $caption = $_POST["post-caption"]; 
+	  $file = addslashes(file_get_contents($_FILES["create-post-image"]["tmp_name"]));
+    $caption = $_POST["create-post-caption"]; 
     $tagged_users = get_tagged_users($caption);
 		
 	  // INSERT INTO POSTS TABLE
@@ -302,6 +302,7 @@ if (isset($_POST["create-post"])) {
       foreach($tagged_users as $tagged_user){
         $db -> query("INSERT INTO `tagged_in` (`username`, `id`) VALUES ('$tagged_user', '$post_id')"); 
       }
+      $_POST = array();
       header('location: index.php');
 	}
 }
