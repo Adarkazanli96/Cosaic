@@ -278,12 +278,12 @@ if (isset($_POST["create-post"])) {
 		
 	  // Retrieves the image file and caption. 
 	  $file = addslashes(file_get_contents($_FILES["create-post-image"]["tmp_name"]));
-    $caption = $_POST["create-post-caption"]; 
+      $caption = $_POST["create-post-caption"]; 
 		
 	  // INSERT INTO POSTS TABLE
 	  $query = "INSERT INTO `posts` (`timestamp`, `caption`, `post_image`) 
 		        VALUES (NOW(), '$caption', '$file')"; 
-    mysqli_query($db, $query);
+      mysqli_query($db, $query);
   
       
       // Retrieves the username of the current user
@@ -341,7 +341,10 @@ while ($row = mysqli_fetch_row($result)) {
     // Add to likes
     mysqli_query($db, "INSERT INTO likes (id, timestamp) 
                        VALUES (NULL, NOW())"); 
-
+    
+    // Updates the likes attribute in the posts table
+    mysqli_query($db, "UPDATE posts SET likes = likes + 1 WHERE id = $post_id"); 
+    
     // Retrieves the like id number. 
     $result = mysqli_query($db, "SELECT id FROM likes ORDER BY id DESC LIMIT 1");      
     $last_like = mysqli_fetch_row($result);
